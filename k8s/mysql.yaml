@@ -80,14 +80,14 @@ spec:
     app: mysql
   clusterIP: None
 ---
-kind: Service
-apiVersion: v1
-metadata:
-  name: mysql
-  namespace: mysql
-spec:
-  type: ExternalName
-  externalName: mysql.mysql.svc.cluster.local
-  ports:
-    - port: 3306
+#kind: Service
+#apiVersion: v1
+#metadata:
+#  name: mysql
+#  namespace: mysql
+#spec:
+#  type: ExternalName
+#  externalName: mysql.mysql.svc
+#  ports:
+#    - port: 3306
 ---
