@@ -26,6 +26,12 @@ define setup
 	@docker-compose -f compose.yaml up -d --build --force-recreate --remove-orphans
 endef
 
+define k8s-apply
+	@kubectl apply -f ./k8s/mysql.yaml
+    @kubectl apply -f ./k8s/kafka.yaml
+    @kubectl apply -f ./k8s/app.yaml
+endef
+
 .PHONY: help install setup teardown
 
 help:
@@ -85,3 +91,6 @@ run-local: build-local
 
 run: build
 	docker run -p 8080:8080 shubham01/server-sent-events:latest --network="host"
+
+k8s-apply:
+	$(call k8s-apply)
