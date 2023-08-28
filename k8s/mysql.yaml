@@ -54,6 +54,22 @@ spec:
         - image: mysql:latest
           name: mysql
           env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: root1234
+#              valueFrom:
+#                secretKeyRef:
+#                  name: mysql-pass-root
+#                  key: password
+            - name: MYSQL_USER
+              value: server
+            - name: MYSQL_PASSWORD
+              value: root1234
+#              valueFrom:
+#                secretKeyRef:
+#                  name: mysql-pass-user
+#                  key: password
+            - name: MYSQL_DATABASE
+              value: sse
             # Use secret in real usage
             - name: MYSQL_ROOT_PASSWORD
               value: root1234
@@ -76,6 +92,7 @@ metadata:
 spec:
   ports:
     - port: 3306
+      targetPort: 3306
   selector:
     app: mysql
   clusterIP: None

@@ -33,7 +33,7 @@ services:
       - 'MYSQL_DATABASE=sse'
       - 'MYSQL_PASSWORD=root1234'
       - 'MYSQL_ROOT_PASSWORD=root1234'
-      - 'MYSQL_USER=test'
+      - 'MYSQL_USER=server'
     ports:
       - '3306:3306'
 
