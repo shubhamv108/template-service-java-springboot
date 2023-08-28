@@ -1,0 +1,12 @@
+.idea/
+*.iml
+*.iws
+target/
+.sonar/
+.sonarlint/
+
+.gradle/
+.build/
+k8s/
+
+.github/
