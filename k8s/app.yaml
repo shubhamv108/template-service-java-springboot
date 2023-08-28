@@ -1,0 +1,105 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sse
+  labels:
+    name: sse
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-sent-events
+  namespace: sse
+  labels:
+    app: server-sent-events
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server-sent-events
+  template:
+    metadata:
+      labels:
+        app: server-sent-events
+    spec:
+      containers:
+        - name: server-sent-events
+          image: shubham01/server-sent-events:latest
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 180
+            timeoutSeconds: 120
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 180
+            timeoutSeconds: 90
+            successThreshold: 1
+            failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-sent-events
+  namespace: sse
+spec:
+  selector:
+    app: server-sent-events
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 8080
+---
+## Uncomment to add ingress after adding ingress controller
+#apiVersion: networking.k8s.io/v1
+#kind: Ingress
+#metadata:
+#  name: sse
+#  namespace: sse
+#spec:
+#  rules:
+#    - http:
+#        paths:
+#        - path: /StudentDetails
+#          pathType: Prefix
+#          backend:
+#            service:
+#              name: student
+#              port:
+#                number: 80
+
+---
+## Uncomment to add kubernetes route
+#apiVersion: route.openshift.io/v1
+#kind: Route
+#metadata:
+#  name: student
+#  namespace: shubham
+#spec:
+#  #  host must conform to DNS 952 subdomain conventions
+#  host: "sse-server-sent-events-.dev-shubhamvarshney.io"
+#  port:
+#    targetPort: 8080
+#  to:
+#    kind: Service
+#    name: server-sent-events
+#    weight: 100
+#  tls:
+#    termination: edge
+#    insecureEdgeTerminationPolicy: Redirect
+#  wildcardPolicy: None
+---
