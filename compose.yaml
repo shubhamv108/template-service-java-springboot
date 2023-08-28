@@ -31,9 +31,9 @@ services:
     image: 'mysql:latest'
     environment:
       - 'MYSQL_DATABASE=sse'
-      - 'MYSQL_PASSWORD=root1234'
+#      - 'MYSQL_PASSWORD=root1234'
       - 'MYSQL_ROOT_PASSWORD=root1234'
-      - 'MYSQL_USER=server'
+#      - 'MYSQL_USER=root'
     ports:
       - '3306:3306'
 
