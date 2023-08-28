@@ -32,6 +32,10 @@ define k8s-apply
     @kubectl apply -f ./k8s/app.yaml
 endef
 
+define k8s-delete-app
+    @kubectl delete -f ./k8s/app.yaml
+endef
+
 .PHONY: help install setup teardown
 
 help:
@@ -94,3 +98,6 @@ run: build
 
 k8s-apply:
 	$(call k8s-apply)
+
+k8s-delete-app:
+	$(call k8s-delete-app)
