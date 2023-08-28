@@ -43,7 +43,7 @@ spec:
             failureThreshold: 3
           readinessProbe:
             httpGet:
-              path: /healthz
+              path: /actuator/health
               port: 8080
               scheme: HTTP
             initialDelaySeconds: 180

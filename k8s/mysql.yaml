@@ -74,18 +74,17 @@ metadata:
   name: mysql
   namespace: mysql
 spec:
-  type: NodePort
   ports:
     - port: 3306
   selector:
     app: mysql
-#  clusterIP: None
+  clusterIP: None
 ---
 kind: Service
 apiVersion: v1
 metadata:
   name: mysql
-  namespace: playground
+  namespace: mysql
 spec:
   type: ExternalName
   externalName: mysql.mysql.svc.cluster.local
