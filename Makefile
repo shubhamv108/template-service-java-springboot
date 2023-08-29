@@ -61,7 +61,7 @@ setup: teardown build
 start-services:
 	$(call start-services)
 
-local-app: build-local
+local-app: build
 	$(call local-app)
 
 teardown:
