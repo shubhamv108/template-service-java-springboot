@@ -1,0 +1,1 @@
+kubectl logs -f elasticsearch-es-default-0
