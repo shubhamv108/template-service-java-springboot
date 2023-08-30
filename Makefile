@@ -2,7 +2,7 @@ SHELL := /bin/bash
 OS := $(shell uname)
 
 define start-services
-	@docker-compose -f compose.yaml up --force-recreate -d --remove-orphans mysql kafka
+	@docker-compose -f compose.yaml up --force-recreate -d --remove-orphans fluentbit mysql kafka elasticsearch
 endef
 
 define start-app
@@ -61,9 +61,6 @@ setup: teardown build
 start-services:
 	$(call start-services)
 
-local-app: build
-	$(call local-app)
-
 teardown:
 	$(call teardown, "Tearing down...")
 
@@ -89,15 +86,20 @@ build-local:
 
 build: clean build-local
 	docker build -t shubham01/server-sent-events:latest .
+	docker build -t shubham01/sse-fluentbit:latest fluentbit
 
 run-local: build-local
 	./gradlew bootRun
 
 run: build
 	docker run -p 8080:8080 shubham01/server-sent-events:latest --network="host"
+	docker run -p 24224:24224 shubham01/ssse-fluentbit:latest --network="host"
 
 k8s-apply:
 	$(call k8s-apply)
 
 k8s-delete-app:
 	$(call k8s-delete-app)
+
+local-app: build
+	$(call local-app)

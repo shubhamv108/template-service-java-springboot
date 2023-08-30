@@ -1,7 +1,13 @@
 package code.shubham.serversentevents;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,6 +20,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString
 @Table(name = "user_events")
 public class UserEvent {
 
@@ -27,6 +34,7 @@ public class UserEvent {
     private String userId;
 
     private String name;
+
     private String type;
 
     private String value;
@@ -62,14 +70,5 @@ public class UserEvent {
 
     public Date getTimestamp() {
         return timestamp;
-    }
-
-    @Override
-    public String toString() {
-        return "UserAction{" +
-                "name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", value=" + value +
-                '}';
     }
 }

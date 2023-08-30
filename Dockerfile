@@ -1,7 +1,7 @@
 FROM openjdk:20-oracle
 LABEL authors="Shubham Varshney"
 
-ENV JAVA_HOME="/usr/lib/jvm/default-jvm/"
+ENV JAVA_HOME="/usr/lib/jvm/default-jvm"
 
 ENV PATH=$PATH:${JAVA_HOME}/bin
 ADD build/libs/server-sent-events-0.0.1.jar app.jar

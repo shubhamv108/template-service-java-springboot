@@ -18,11 +18,20 @@ services:
     ports:
       - '8080:8080'
 
-#    restart: 'on-failure'
+    restart: 'on-failure'
 
     depends_on:
+      - fluentbit
       - mysql
       - kafka
+      - elasticsearch
+
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: fluentbit:24224
+        fluentd-async-connect: "true"
+        tag: 'containerssh.{{.ID}}'
 
     environment:
       - SLEEP_LENGTH=5
@@ -30,6 +39,13 @@ services:
       - spring.datasource.username=test
       - spring.datasource.password=root1234
       - spring.kafka.bootstrap-servers=kafka:9092
+
+  fluentbit:
+    image: 'shubham01/sse-fluentbit:latest'
+    hostname: fluentbit
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
 
   mysql:
     image: 'mysql:latest'
@@ -63,3 +79,16 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  elasticsearch:
+    image: elasticsearch:8.9.1
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+
+networks:
+  sse:
+    external: true
