@@ -27,9 +27,7 @@ define setup
 endef
 
 define k8s-apply
-	@kubectl apply -f ./k8s/mysql.yaml
-    @kubectl apply -f ./k8s/kafka.yaml
-    @kubectl apply -f ./k8s/app.yaml
+	sudo /bin/bash scripts/k8s/apply.sh
 endef
 
 define k8s-delete-app
