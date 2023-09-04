@@ -8,5 +8,6 @@ target/
 .gradle/
 .build/
 k8s/
+scripts/
 
 .github/
