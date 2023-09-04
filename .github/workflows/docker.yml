@@ -28,12 +28,8 @@ jobs:
         run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - name: Build the Docker image
         run: docker build . --file Fluentbit-Dockerfile --tag ${{secrets.DOCKER_USER}}/server-sent-events:latest
-      - name: Change Directory to fluentbit
-        run: cd fluentbit
       - name: Build the Fluentbit Docker image
         run: docker build . --file fluentbit/Dockerfile --tag ${{secrets.DOCKER_USER}}/sse-fluentbit:latest
-      - name: Change Directory to Root
-        run: cd ..
       - name: Docker Push To DockerHub
         run: docker push ${{secrets.DOCKER_USER}}/server-sent-events
       - name: Docker Push Fluentbit To DockerHub
