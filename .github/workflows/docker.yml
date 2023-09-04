@@ -27,9 +27,9 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - name: Build the Docker image
-        run: docker build . --file Fluentbit-Dockerfile --tag ${{secrets.DOCKER_USER}}/server-sent-events:latest
+        run: docker build . --file Dockerfile --tag ${{secrets.DOCKER_USER}}/server-sent-events:latest
       - name: Build the Fluentbit Docker image
-        run: docker build . --file fluentbit/Dockerfile --tag ${{secrets.DOCKER_USER}}/sse-fluentbit:latest
+        run: docker build . --file Fluentbit-Dockerfile --tag ${{secrets.DOCKER_USER}}/sse-fluentbit:latest
       - name: Docker Push To DockerHub
         run: docker push ${{secrets.DOCKER_USER}}/server-sent-events
       - name: Docker Push Fluentbit To DockerHub
