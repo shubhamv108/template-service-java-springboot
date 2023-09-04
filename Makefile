@@ -2,7 +2,7 @@ SHELL := /bin/bash
 OS := $(shell uname)
 
 define start-services
-	@docker-compose -f compose.yaml up --force-recreate -d --remove-orphans fluentbit mysql kafka elasticsearch
+	@docker-compose -f compose.yaml up --force-recreate -d --remove-orphans fluentbit mysql kafka kafdrop elasticsearch
 endef
 
 define start-app
@@ -77,16 +77,23 @@ install:
 
 
 clean:
-	./gradlew clean
 	clear
-
-build-local:
 	./gradlew clean
+
+build-local: clean
 	./gradlew build
 
-build: clean build-local
+rm-images: clean build-local
+	docker image rm shubham01/server-sent-events
+	docker image rm shubham01/sse-fluentbit
+
+docker-build:
 	docker build -t shubham01/server-sent-events:latest .
 	docker build -t shubham01/sse-fluentbit:latest fluentbit
+
+build: clean build-local docker-build
+
+rebuild: rm-images build
 
 run-local: build-local
 	./gradlew bootRun
