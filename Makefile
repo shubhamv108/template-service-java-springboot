@@ -2,7 +2,7 @@ SHELL := /bin/bash
 OS := $(shell uname)
 
 define start-services
-	@docker-compose -f compose.yaml up --force-recreate -d --remove-orphans fluentbit mysql kafka kafdrop elasticsearch
+	@docker-compose -f compose.yaml up --force-recreate -d --remove-orphans fluentbit mysql kafka kafdrop elasticsearch prometheus grafana telegraf influxdb
 endef
 
 define start-app
@@ -32,6 +32,11 @@ endef
 
 define k8s-delete-app
     @kubectl delete -f ./k8s/app.yaml
+endef
+
+define del-local-app
+    @docker stop server-sent-events
+    @docker rm server-sent-events
 endef
 
 .PHONY: help install setup teardown
@@ -106,5 +111,10 @@ k8s-apply:
 k8s-delete-app:
 	$(call k8s-delete-app)
 
+del-local-app:
+	$(call del-local-app)
+
 local-app: build
 	$(call local-app)
+
+local-app-re: del-local-app local-app

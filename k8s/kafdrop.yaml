@@ -39,5 +39,5 @@ spec:
       name: kafdrop
       protocol: TCP
   selector:
-    app: kafka #name of deployed kafka service
+    app: kafka
   type: LoadBalancer
