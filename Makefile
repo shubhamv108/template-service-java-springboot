@@ -86,9 +86,10 @@ clean:
 build-local: clean
 	./gradlew build
 
-rm-images: clean build-local
-	docker image rm shubham01/server-sent-events
+rm-images: clean
 	docker image rm shubham01/sse-fluentbit
+	docker image rm shubham01/server-sent-events
+	docker image rm server-sent-events
 
 docker-build:
 	docker build -t shubham01/server-sent-events:latest .

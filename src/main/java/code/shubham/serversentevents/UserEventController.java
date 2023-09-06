@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
+import java.lang.Exception;
+import io.sentry.Sentry;
 
 @Slf4j
 @RestController
@@ -31,6 +33,12 @@ public class UserEventController {
             @RequestBody final UserEvent event
     ) throws InterruptedException, ExecutionException {
         log.info(String.format("[START] Received Request: /user/%s/events; Body: %s", userId, event));
+
+        try {
+            throw new Exception("This is a test.");
+        } catch (Exception e) {
+            Sentry.captureException(e);
+        }
         event.setUserId(userId);
         final UserEvent persistedAction = this.repository.save(event);
         log.info(LogMessage.of("Persisted event for userId: %s", userId));
