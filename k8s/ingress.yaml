@@ -1,0 +1,20 @@
+## Uncomment to add kubernetes route
+#apiVersion: route.openshift.io/v1
+#kind: Route
+#metadata:
+#  name: server-sent-events
+#  namespace: sse
+#spec:
+#  #  host must conform to DNS 952 subdomain conventions
+#  host: "sse-server-sent-events-.dev-shubhamvarshney.io"
+#  port:
+#    targetPort: 8080
+#  to:
+#    kind: Service
+#    name: server-sent-events
+#    weight: 100
+#  tls:
+#    termination: edge
+#    insecureEdgeTerminationPolicy: Redirect
+#  wildcardPolicy: None
+#---

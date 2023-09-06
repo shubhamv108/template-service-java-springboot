@@ -77,6 +77,24 @@ spec:
     - port: 80
       targetPort: 8080
 ---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: server-sent-events
+  namespace: sse
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /server-sent-events/*
+            pathType: Prefix
+            backend:
+              service:
+                name: server-sent-events
+                port:
+                  number: 80
+
+---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -91,43 +109,4 @@ spec:
   endpoints:
     - port: http-traffic
       path: "/actuator/prometheus"
----
-## Uncomment to add ingress after adding ingress controller
-#apiVersion: networking.k8s.io/v1
-#kind: Ingress
-#metadata:
-#  name: sse
-#  namespace: sse
-#spec:
-#  rules:
-#    - http:
-#        paths:
-#        - path: /StudentDetails
-#          pathType: Prefix
-#          backend:
-#            service:
-#              name: student
-#              port:
-#                number: 80
-
----
-## Uncomment to add kubernetes route
-#apiVersion: route.openshift.io/v1
-#kind: Route
-#metadata:
-#  name: student
-#  namespace: shubham
-#spec:
-#  #  host must conform to DNS 952 subdomain conventions
-#  host: "sse-server-sent-events-.dev-shubhamvarshney.io"
-#  port:
-#    targetPort: 8080
-#  to:
-#    kind: Service
-#    name: server-sent-events
-#    weight: 100
-#  tls:
-#    termination: edge
-#    insecureEdgeTerminationPolicy: Redirect
-#  wildcardPolicy: None
 ---
