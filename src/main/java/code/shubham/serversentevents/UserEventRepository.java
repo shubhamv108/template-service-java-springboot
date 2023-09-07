@@ -8,5 +8,7 @@ import java.util.Collections;
 
 @Repository
 public interface UserEventRepository extends JpaRepository<UserEvent, Long> {
-    Collection<UserEvent> findByUserId(String userId);
+
+	Collection<UserEvent> findByUserId(String userId);
+
 }

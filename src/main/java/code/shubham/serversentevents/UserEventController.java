@@ -16,43 +16,43 @@ import io.sentry.Sentry;
 @RequestMapping("/user/{userId}/events")
 public class UserEventController {
 
-    private final UserEventRepository repository;
-    private final EventPublisher eventPublisher;
+	private final UserEventRepository repository;
 
-    @Autowired
-    public UserEventController(
-            final UserEventRepository repository,
-            final EventPublisher eventPublisher) {
-        this.repository = repository;
-        this.eventPublisher = eventPublisher;
-    }
+	private final EventPublisher eventPublisher;
 
-    @PostMapping
-    public ResponseEntity<?> post(
-            @PathVariable("userId") final String userId,
-            @RequestBody final UserEvent event
-    ) throws InterruptedException, ExecutionException {
-        log.info(String.format("[START] Received Request: /user/%s/events; Body: %s", userId, event));
+	@Autowired
+	public UserEventController(final UserEventRepository repository, final EventPublisher eventPublisher) {
+		this.repository = repository;
+		this.eventPublisher = eventPublisher;
+	}
 
-        try {
-            throw new Exception("This is a test.");
-        } catch (Exception e) {
-            Sentry.captureException(e);
-        }
-        event.setUserId(userId);
-        final UserEvent persistedAction = this.repository.save(event);
-        log.info(LogMessage.of("Persisted event for userId: %s", userId));
-        return this.eventPublisher
-                .send(persistedAction)
-                .thenApply(e -> ResponseEntity.of(Optional.ofNullable(persistedAction)))
-                .thenApply(e -> { log.info(LogMessage.of("[COMPLETE] Responding Request: /user/%s/events; Response: %s", userId, e)); return e; })
-                .get();
-    }
+	@PostMapping
+	public ResponseEntity<?> post(@PathVariable("userId") final String userId, @RequestBody final UserEvent event)
+			throws InterruptedException, ExecutionException {
+		log.info(String.format("[START] Received Request: /user/%s/events; Body: %s", userId, event));
 
-    @GetMapping
-    public ResponseEntity<?> get(
-        @PathVariable("userId") final String userId
-    ) throws InterruptedException, ExecutionException {
-        return ResponseEntity.of(Optional.ofNullable(this.repository.findByUserId(userId)));
-    }
+		try {
+			throw new Exception("This is a test.");
+		}
+		catch (Exception e) {
+			Sentry.captureException(e);
+		}
+		event.setUserId(userId);
+		final UserEvent persistedAction = this.repository.save(event);
+		log.info(LogMessage.of("Persisted event for userId: %s", userId));
+		return this.eventPublisher.send(persistedAction)
+			.thenApply(e -> ResponseEntity.of(Optional.ofNullable(persistedAction)))
+			.thenApply(e -> {
+				log.info(LogMessage.of("[COMPLETE] Responding Request: /user/%s/events; Response: %s", userId, e));
+				return e;
+			})
+			.get();
+	}
+
+	@GetMapping
+	public ResponseEntity<?> get(@PathVariable("userId") final String userId)
+			throws InterruptedException, ExecutionException {
+		return ResponseEntity.of(Optional.ofNullable(this.repository.findByUserId(userId)));
+	}
+
 }

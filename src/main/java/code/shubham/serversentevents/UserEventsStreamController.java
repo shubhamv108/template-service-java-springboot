@@ -16,33 +16,28 @@ import java.util.Date;
 @RestController
 public class UserEventsStreamController {
 
-    private final UserEventSubscriber eventSubscriber;
+	private final UserEventSubscriber eventSubscriber;
 
-    @Autowired
-    public UserEventsStreamController(final UserEventSubscriber eventSubscriber) {
-        this.eventSubscriber = eventSubscriber;
-    }
+	@Autowired
+	public UserEventsStreamController(final UserEventSubscriber eventSubscriber) {
+		this.eventSubscriber = eventSubscriber;
+	}
 
-    @GetMapping(path = "/stream-flux", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<String> streamFlux() {
-        return Flux.interval(Duration.ofSeconds(100))
-                .map(sequence -> "Flux - " + LocalTime.now().toString());
-    }
+	@GetMapping(path = "/stream-flux", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	public Flux<String> streamFlux() {
+		return Flux.interval(Duration.ofSeconds(100)).map(sequence -> "Flux - " + LocalTime.now().toString());
+	}
 
-    @GetMapping("/stream-sse")
-    public Flux<ServerSentEvent<?>> streamEvents(
-        @RequestParam("userId") String userId,
-        @RequestParam("timestamp") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS") Date timestamp
-    ) {
-        return this.eventSubscriber.get()
-                .filter(event ->
-                        userId.equals(event.getUserId()) && timestamp.compareTo(event.getTimestamp()) == -1)
-                .map(event ->
-                        ServerSentEvent.<UserEvent>builder()
-                            .id(event.getEventId())
-                            .event(event.getType() + event.getName())
-                            .data(event)
-                            .build()
-                );
-    }
+	@GetMapping("/stream-sse")
+	public Flux<ServerSentEvent<?>> streamEvents(@RequestParam("userId") String userId,
+			@RequestParam("timestamp") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS") Date timestamp) {
+		return this.eventSubscriber.get()
+			.filter(event -> userId.equals(event.getUserId()) && timestamp.compareTo(event.getTimestamp()) == -1)
+			.map(event -> ServerSentEvent.<UserEvent>builder()
+				.id(event.getEventId())
+				.event(event.getType() + event.getName())
+				.data(event)
+				.build());
+	}
+
 }
