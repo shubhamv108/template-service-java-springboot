@@ -10,7 +10,11 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ServiceResponse {
-    private Integer statusCode;
-    private Object data;
-    private Object error;
+
+	private Integer statusCode;
+
+	private Object data;
+
+	private Object error;
+
 }

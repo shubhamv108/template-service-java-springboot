@@ -16,25 +16,24 @@ import jakarta.servlet.http.HttpServletRequest;
 @Order(6)
 public class ContextFilter implements Filter {
 
-    @Override
-    public void doFilter(
-            ServletRequest servletRequest,
-            ServletResponse servletResponse,
-            FilterChain chain) throws java.io.IOException, ServletException {
+	@Override
+	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
+			throws java.io.IOException, ServletException {
 
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        String userIdString = java.util.Optional.ofNullable(request.getHeader("userId"))
-                .orElse((String) request.getAttribute("userId"));
-        if (userIdString != null)
-            code.shubham.commons.contexts.UserContextHolder.setUserId(Integer.valueOf(userIdString));
+		HttpServletRequest request = (HttpServletRequest) servletRequest;
+		String userIdString = java.util.Optional.ofNullable(request.getHeader("userId"))
+			.orElse((String) request.getAttribute("userId"));
+		if (userIdString != null)
+			code.shubham.commons.contexts.UserContextHolder.setUserId(Integer.valueOf(userIdString));
 
-        String tenantId = request.getHeader("tenantId");
-        if (tenantId != null)
-            code.shubham.commons.contexts.TenantContextHolder.setTenant(tenantId);
+		String tenantId = request.getHeader("tenantId");
+		if (tenantId != null)
+			code.shubham.commons.contexts.TenantContextHolder.setTenant(tenantId);
 
-        chain.doFilter(servletRequest, servletResponse);
+		chain.doFilter(servletRequest, servletResponse);
 
-        code.shubham.commons.contexts.UserContextHolder.clear();
-        code.shubham.commons.contexts.TenantContextHolder.clear();
-    }
+		code.shubham.commons.contexts.UserContextHolder.clear();
+		code.shubham.commons.contexts.TenantContextHolder.clear();
+	}
+
 }

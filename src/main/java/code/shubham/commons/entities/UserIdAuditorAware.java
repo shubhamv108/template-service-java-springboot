@@ -7,8 +7,9 @@ import java.util.Optional;
 
 public class UserIdAuditorAware implements AuditorAware<Integer> {
 
-    @Override
-    public Optional<Integer> getCurrentAuditor() {
-        return Optional.ofNullable(UserContextHolder.getUserId());
-    }
+	@Override
+	public Optional<Integer> getCurrentAuditor() {
+		return Optional.ofNullable(UserContextHolder.getUserId());
+	}
+
 }
