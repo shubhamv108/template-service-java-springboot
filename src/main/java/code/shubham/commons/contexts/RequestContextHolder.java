@@ -1,12 +1,15 @@
 package code.shubham.commons.contexts;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class RequestContextHolder {
 
-	private static final ThreadLocal<java.util.Map<String, Object>> requestContext = getNew();
+	private static final ThreadLocal<Map<String, Object>> requestContext = getNew();
 
-	private static ThreadLocal<java.util.Map<String, Object>> getNew() {
-		ThreadLocal<java.util.Map<String, Object>> requestContext = new ThreadLocal<>();
-		requestContext.set(new java.util.LinkedHashMap<>());
+	private static ThreadLocal<Map<String, Object>> getNew() {
+		ThreadLocal<Map<String, Object>> requestContext = new ThreadLocal<>();
+		requestContext.set(new LinkedHashMap<>());
 		return requestContext;
 	}
 

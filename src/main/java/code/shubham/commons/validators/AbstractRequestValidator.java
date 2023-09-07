@@ -1,12 +1,11 @@
 package code.shubham.commons.validators;
 
-import code.shubham.common.exceptions.InvalidRequestException;
+import code.shubham.commons.exceptions.InvalidRequestException;
 
-public abstract class AbstractRequestValidator<Request>
-		extends code.shubham.commons.validators.AbstractValidator<Request> {
+public abstract class AbstractRequestValidator<Request> extends AbstractValidator<Request> {
 
 	@Override
-	public code.shubham.commons.validators.IValidator<Request> validate(final Request request) {
+	public IValidator<Request> validate(final Request request) {
 		if (request == null) {
 			this.putMessage("request", MUST_NOT_BE_EMPTY, "request");
 			return this;
@@ -15,7 +14,7 @@ public abstract class AbstractRequestValidator<Request>
 	}
 
 	@Override
-	public code.shubham.commons.validators.IValidator<Request> validateOrThrowException(final Request request) {
+	public IValidator<Request> validateOrThrowException(final Request request) {
 		this.validate(request);
 		if (this.hasMessages()) {
 			this.throwException();

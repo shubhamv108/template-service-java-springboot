@@ -1,10 +1,16 @@
 package code.shubham.commons.exceptions;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class InvalidRequestException extends ClientException {
 
-	private final java.util.Collection<java.util.Map<String, java.util.Collection<String>>> errorMessagesList = new java.util.ArrayList<>();
+	private final Collection<Map<String, Collection<String>>> errorMessagesList = new ArrayList<>();
 
-	protected java.util.Map<String, java.util.Collection<String>> errorMessages;
+	protected Map<String, Collection<String>> errorMessages;
 
 	public InvalidRequestException() {
 		this(null);
@@ -12,11 +18,11 @@ public class InvalidRequestException extends ClientException {
 
 	public InvalidRequestException(String key, String message) {
 		this(null);
-		this.errorMessages.put(key, new java.util.ArrayList<>(java.util.Arrays.asList(message)));
+		this.errorMessages.put(key, new ArrayList<>(Arrays.asList(message)));
 	}
 
-	public InvalidRequestException(final java.util.Map<String, java.util.Collection<String>> errorMessages) {
-		this.errorMessages = new java.util.LinkedHashMap<>();
+	public InvalidRequestException(final Map<String, Collection<String>> errorMessages) {
+		this.errorMessages = new LinkedHashMap<>();
 		if (errorMessages != null)
 			this.errorMessages.putAll(errorMessages);
 	}
@@ -25,34 +31,34 @@ public class InvalidRequestException extends ClientException {
 		if (isCurrentEmpty())
 			return;
 		this.errorMessagesList.add(this.errorMessages);
-		this.errorMessages = new java.util.LinkedHashMap<>();
+		this.errorMessages = new LinkedHashMap<>();
 	}
 
-	public code.shubham.commons.exceptions.InvalidRequestException put(final String errorKey,
-			final java.util.Collection<String> errorMessages) {
+	public InvalidRequestException put(final String errorKey,
+			final Collection<String> errorMessages) {
 		this.errorMessages.put(errorKey, errorMessages);
 		return this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public code.shubham.commons.exceptions.InvalidRequestException putErrorMessage(final String errorKey,
+	public InvalidRequestException putErrorMessage(final String errorKey,
 			final String errorMessage, String... params) {
 		return putErrorMessage(errorKey, String.format(errorMessage, params));
 	}
 
-	public code.shubham.commons.exceptions.InvalidRequestException putErrorMessage(final String errorKey,
+	public InvalidRequestException putErrorMessage(final String errorKey,
 			final String errorMessage) {
-		java.util.Collection<String> errorMessages = this.errorMessages.get(errorKey);
+		Collection<String> errorMessages = this.errorMessages.get(errorKey);
 		if (java.util.Objects.isNull(errorMessages)) {
-			errorMessages = new java.util.ArrayList<>();
+			errorMessages = new ArrayList<>();
 			this.errorMessages.put(errorKey, errorMessages);
 		}
 		errorMessages.add(errorMessage);
 		return get();
 	}
 
-	public code.shubham.commons.exceptions.InvalidRequestException putErrorMessages(
-			final java.util.Map<String, java.util.Collection<String>> errorMessages) {
+	public InvalidRequestException putErrorMessages(
+			final Map<String, Collection<String>> errorMessages) {
 		if (this.errorMessages == null) {
 			this.errorMessages = errorMessages;
 		}
@@ -62,11 +68,11 @@ public class InvalidRequestException extends ClientException {
 		return get();
 	}
 
-	private code.shubham.commons.exceptions.InvalidRequestException get() {
+	private InvalidRequestException get() {
 		return this;
 	}
 
-	private java.util.Map<String, java.util.Collection<String>> getErrorMessages() {
+	private Map<String, Collection<String>> getErrorMessages() {
 		return errorMessages;
 	}
 
@@ -105,7 +111,7 @@ public class InvalidRequestException extends ClientException {
 		return this.errorMessages.isEmpty();
 	}
 
-	public java.util.Collection<java.util.Map<String, java.util.Collection<String>>> getOriginalErrors() {
+	public Collection<Map<String, Collection<String>>> getOriginalErrors() {
 		return this.errorMessagesList;
 	}
 
