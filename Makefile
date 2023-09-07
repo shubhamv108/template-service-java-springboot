@@ -73,11 +73,9 @@ run-test:
 migrations:
 
 format:
-	./gradlew googleJavaFormat
-	./gradlew verifyGoogleJavaFormat
+	./gradlew format
 
-install:
-
+install: setup
 
 clean:
 	clear
