@@ -54,6 +54,7 @@ dependencies {
 		'com.google.code.gson:gson:2.8.9',
 		'org.springframework.boot:spring-boot-starter-data-jpa',
 		'org.springframework.boot:spring-boot-starter-webflux',
+		'org.springframework.boot:spring-boot-starter-web',
 		'org.springframework.kafka:spring-kafka',
 	)
 	runtimeOnly (
