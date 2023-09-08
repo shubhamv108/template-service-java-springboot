@@ -117,3 +117,6 @@ local-app: build
 	$(call local-app)
 
 local-app-re: del-local-app local-app
+
+coverage:
+	./gradlew jacocoTestCoverageVerification

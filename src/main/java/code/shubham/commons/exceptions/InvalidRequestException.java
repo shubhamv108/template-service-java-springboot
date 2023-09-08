@@ -34,20 +34,17 @@ public class InvalidRequestException extends ClientException {
 		this.errorMessages = new LinkedHashMap<>();
 	}
 
-	public InvalidRequestException put(final String errorKey,
-			final Collection<String> errorMessages) {
+	public InvalidRequestException put(final String errorKey, final Collection<String> errorMessages) {
 		this.errorMessages.put(errorKey, errorMessages);
 		return this;
 	}
 
 	@SuppressWarnings("unchecked")
-	public InvalidRequestException putErrorMessage(final String errorKey,
-			final String errorMessage, String... params) {
+	public InvalidRequestException putErrorMessage(final String errorKey, final String errorMessage, String... params) {
 		return putErrorMessage(errorKey, String.format(errorMessage, params));
 	}
 
-	public InvalidRequestException putErrorMessage(final String errorKey,
-			final String errorMessage) {
+	public InvalidRequestException putErrorMessage(final String errorKey, final String errorMessage) {
 		Collection<String> errorMessages = this.errorMessages.get(errorKey);
 		if (java.util.Objects.isNull(errorMessages)) {
 			errorMessages = new ArrayList<>();
@@ -57,8 +54,7 @@ public class InvalidRequestException extends ClientException {
 		return get();
 	}
 
-	public InvalidRequestException putErrorMessages(
-			final Map<String, Collection<String>> errorMessages) {
+	public InvalidRequestException putErrorMessages(final Map<String, Collection<String>> errorMessages) {
 		if (this.errorMessages == null) {
 			this.errorMessages = errorMessages;
 		}
