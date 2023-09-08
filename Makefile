@@ -2,7 +2,11 @@ SHELL := /bin/bash
 OS := $(shell uname)
 
 define start-services
-	@docker-compose -f compose.yaml up --force-recreate -d --remove-orphans fluentbit mysql kafka kafdrop elasticsearch prometheus grafana telegraf influxdb
+	@docker-compose -f compose.yaml up --force-recreate -d --remove-orphans sonar fluentbit mysql kafka kafdrop elasticsearch prometheus grafana telegraf influxdb
+endef
+
+define check
+	@docker-compose -f sonar-compose.yaml up --force-recreate -d --remove-orphans sonar-db sonar
 endef
 
 define start-app
@@ -11,6 +15,11 @@ endef
 
 define teardown
 	@docker-compose -f compose.yaml rm -f -v -s
+	@docker system prune -f --volumes
+endef
+
+define check-teardown
+	@docker-compose -f sonar-compose.yaml rm -f -v -s
 	@docker system prune -f --volumes
 endef
 
@@ -54,6 +63,12 @@ help:
 	@echo "test: Run tests in local"
 	@echo "run-test: Run specfic test"
 	@echo "############################"
+
+check:
+	./gradlew sonar
+
+check-teardown:
+	$(call check-teardown)
 
 local-setup: teardown
 	$(call local-setup)
