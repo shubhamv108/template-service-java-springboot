@@ -1,13 +1,13 @@
-package code.shubham.serversentevents;
+package code.shubham.templateservicejavaspringboot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ServerSentEventsApplication {
+public class TemplateServiceJavaSpringBootApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ServerSentEventsApplication.class, args);
+		SpringApplication.run(TemplateServiceJavaSpringBootApplication.class, args);
 	}
 
 }

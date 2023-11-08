@@ -2,16 +2,16 @@
 #apiVersion: route.openshift.io/v1
 #kind: Route
 #metadata:
-#  name: server-sent-events
-#  namespace: sse
+#  name: template-service-java-springboot
+#  namespace: template-service-java-springboot
 #spec:
 #  #  host must conform to DNS 952 subdomain conventions
-#  host: "sse-server-sent-events-.dev-shubhamvarshney.io"
+#  host: "template-service-java-springboot-template-service-java-springboot-.dev-shubhamvarshney.io"
 #  port:
 #    targetPort: 8080
 #  to:
 #    kind: Service
-#    name: server-sent-events
+#    name: template-service-java-springboot
 #    weight: 100
 #  tls:
 #    termination: edge

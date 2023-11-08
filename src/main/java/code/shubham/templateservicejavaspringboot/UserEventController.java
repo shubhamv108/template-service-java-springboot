@@ -1,4 +1,4 @@
-package code.shubham.serversentevents;
+package code.shubham.templateservicejavaspringboot;
 
 import code.shubham.commons.models.LogMessage;
 import lombok.extern.slf4j.Slf4j;

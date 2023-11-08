@@ -1,4 +1,4 @@
-package code.shubham.serversentevents;
+package code.shubham.templateservicejavaspringboot;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;

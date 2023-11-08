@@ -1,4 +1,4 @@
-package code.shubham.serversentevents;
+package code.shubham.templateservicejavaspringboot;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,7 +28,7 @@ public class UserEventsStreamController {
 		return Flux.interval(Duration.ofSeconds(100)).map(sequence -> "Flux - " + LocalTime.now().toString());
 	}
 
-	@GetMapping("/stream-sse")
+	@GetMapping("/stream-template-service-java-springboot")
 	public Flux<ServerSentEvent<?>> streamEvents(@RequestParam("userId") String userId,
 			@RequestParam("timestamp") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS") Date timestamp) {
 		return this.eventSubscriber.get()

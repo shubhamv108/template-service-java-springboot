@@ -1,4 +1,4 @@
-package code.shubham.serversentevents;
+package code.shubham.templateservicejavaspringboot;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

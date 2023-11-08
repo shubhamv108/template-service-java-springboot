@@ -47,6 +47,7 @@ define k8s-apply
     kubectl apply -f https://download.elastic.co/downloads/eck/2.9.0/operator.yaml
     kubectl apply -f k8s/es.yaml
     kubectl create namespace prometheus
+    helm repo add bitnami https://charts.bitnami.com/bitnami
     helm install prometheus bitnami/kube-prometheus -n prometheus
     kubectl apply -f k8s/app.yaml
     kubectl apply -f k8s/grafana.yaml
@@ -57,9 +58,10 @@ define k8s-delete-app
 endef
 
 define del-local-app
-    @docker stop server-sent-events
-    @docker rm server-sent-events
+    @docker stop template-service-java-springboot
+    @docker rm template-service-java-springboot
 endef
+
 
 .PHONY: help install setup teardown
 
@@ -72,9 +74,9 @@ help:
 	@echo "format: Formats the java codebase"
 	@echo "setup: Setup test resources"
 	@echo "teardown: Destroy test resources"
-	@echo "start-services: Start depdent services for testing"
-	@echo "test: Run tests in local"
-	@echo "run-test: Run specfic test"
+	@echo "start-services: Start dependent services for testing"
+	@echo "tests: Run tests in local"
+	@echo "run-test: Run specific test"
 	@echo "############################"
 
 check:
@@ -113,13 +115,13 @@ build-local: clean
 	./gradlew build
 
 rm-images: clean
-	docker image rm shubham01/sse-fluentbit
-	docker image rm shubham01/server-sent-events
-	docker image rm server-sent-events
+	docker image rm shubham01/template-service-java-springboot-fluentbit
+	docker image rm shubham01/template-service-java-springboot
+	docker image rm template-service-java-springboot
 
 docker-build:
-	docker build -t shubham01/server-sent-events:latest .
-	docker build -t shubham01/sse-fluentbit:latest fluentbit
+	docker build -t shubham01/template-service-java-springboot:latest .
+	docker build -t shubham01/template-service-java-springboot-fluentbit:latest fluentbit
 
 build: clean build-local docker-build
 
@@ -129,8 +131,8 @@ run-local: build-local
 	./gradlew bootRun
 
 run: build
-	docker run -p 8080:8080 shubham01/server-sent-events:latest --network="host"
-	docker run -p 24224:24224 shubham01/ssse-fluentbit:latest --network="host"
+	docker run -p 8080:8080 shubham01/template-service-java-springboot:latest --network="host"
+	docker run -p 24224:24224 shubham01/template-service-java-springboot-fluentbit:latest --network="host"
 
 k8s-apply:
 	$(call k8s-apply)
@@ -148,3 +150,6 @@ local-app-re: del-local-app local-app
 
 coverage:
 	./gradlew jacocoTestCoverageVerification
+
+tests:
+	./gradlew test
