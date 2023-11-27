@@ -1,6 +1,10 @@
 buildscript {
 	repositories {
 		mavenCentral()
+//		maven {
+//			url "http://127.0.0.1:8081/artifactory/libs-release"
+//			allowInsecureProtocol = true
+//		}
 	}
 	dependencies {
 		classpath("io.spring.javaformat:spring-javaformat-gradle-plugin:0.0.39")
@@ -35,6 +39,10 @@ configurations {
 
 repositories {
 	mavenCentral()
+//	maven {
+//		url "http://127.0.0.1:8081/artifactory/libs-release"
+//		allowInsecureProtocol = true
+//	}
 }
 
 dependencies {
@@ -146,7 +154,7 @@ sonarqube {
 		property "sonar.password", ""
 		property "sonar.projectKey", "project:service"
 		property 'sonar.projectName', 'template-service-java-springboot'
-		property 'sonar.java.source', 20
+		property 'sonar.java.source', 21
 		property 'sonar.junit.reportPaths', 'build/results'
 		property 'encoding', 'UTF-8'
 		property 'charSet', 'UTF-8'

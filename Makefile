@@ -152,4 +152,4 @@ coverage:
 	./gradlew jacocoTestCoverageVerification
 
 tests:
-	./gradlew test
+	sudo ./gradlew test

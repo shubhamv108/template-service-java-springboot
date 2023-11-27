@@ -21,6 +21,18 @@ jobs:
         uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
         with:
           arguments: build
+      - name: Checkout
+        uses: actions/checkout@v1
+#      - name: Checkmarx Action
+#        uses: checkmarx-ts/checkmarx-github-action@<version>
+#        with:
+#          cxServer: https://checkmarx.company.com
+#          cxToken: ${{ secrets.CX_TOKEN }}
+#          cxTeam: \CxServer\SP\Company\TeamA
+#          cxGithubIssues: true
+#          cxGithubToken: ${{ secrets.GITHUB_TOKEN }}
+#          cxGithubLabels: bug,test
+#          cxGithubAssignees: shubham108
       - name: Test Coverage Verification
         uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
         with:
@@ -34,6 +46,22 @@ jobs:
         run: docker build . --file Dockerfile --tag ${{secrets.DOCKER_USER}}/template-service-java-springboot:latest
       - name: Build the Fluentbit Docker image
         run: docker build . --file Fluentbit-Dockerfile --tag ${{secrets.DOCKER_USER}}/template-service-java-springboot-fluentbit:latest
+#      - name: Prisma Cloud image scan
+#        id: scan
+#        uses: PaloAltoNetworks/prisma-cloud-scan@v1.5
+#        with:
+#          pcc_console_url: ${{ secrets.PCC_CONSOLE_URL }}
+#          pcc_user: ${{ secrets.PCC_USER }}
+#          pcc_pass: ${{ secrets.PCC_PASS }}
+#          image_name: template-service-java-springboot-fluentbit:latest
+#      - name: Prisma Cloud image scan - Fluentbit
+#        id: scan
+#        uses: PaloAltoNetworks/prisma-cloud-scan@v1.5
+#        with:
+#          pcc_console_url: ${{ secrets.PCC_CONSOLE_URL }}
+#          pcc_user: ${{ secrets.PCC_USER }}
+#          pcc_pass: ${{ secrets.PCC_PASS }}
+#          image_name: template-service-java-springboot:latest
       - name: Docker Push To DockerHub
         run: docker push ${{secrets.DOCKER_USER}}/template-service-java-springboot
       - name: Docker Push Fluentbit To DockerHub
