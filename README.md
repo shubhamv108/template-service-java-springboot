@@ -6,3 +6,7 @@ Simple application to demonstrate server sent events using Spring Boot.
 ### template-service-java-springboot
 ### templateservicejavaspringboot
 ### TemplateServiceJavaSpringBoot
+
+# Github Secrets
+DOCKER_USER
+DOCKER_PASSWORD
