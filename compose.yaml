@@ -147,8 +147,6 @@ services:
       interval: 15s
       timeout: 2s
       retries: 15
-    #    networks:
-    #      - local
 
   pgadmin:
     container_name: pgadmin
@@ -158,8 +156,6 @@ services:
       PGADMIN_DEFAULT_PASSWORD: postgres
     ports:
       - "5050:80"
-  #    networks:
-  #      - local
 
   keycloak-db:
     container_name: keycloak-db
@@ -178,8 +174,6 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: keycloak
       POSTGRES_HOST: postgres
-    #    networks:
-    #      - local
     ports:
       - "5432:5432"
 
