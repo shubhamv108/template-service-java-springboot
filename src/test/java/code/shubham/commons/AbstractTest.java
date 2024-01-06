@@ -1,6 +1,6 @@
 package code.shubham.commons;
 
-import code.shubham.CraftApplication;
+import code.shubham.TemplateServiceJavaSpringBootApplication;
 import code.shubham.commons.contexts.RoleContextHolder;
 import code.shubham.commons.contexts.UserIDContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Set;
 
-@SpringBootTest(classes = CraftApplication.class)
+@SpringBootTest(classes = TemplateServiceJavaSpringBootApplication.class)
 public abstract class AbstractTest {
 
 	@Autowired
