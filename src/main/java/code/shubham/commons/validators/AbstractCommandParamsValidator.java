@@ -3,8 +3,7 @@ package code.shubham.commons.validators;
 import code.shubham.commons.exceptions.InvalidParameterException;
 import code.shubham.commons.exceptions.InvalidParametersException;
 
-public abstract class AbstractCommandParamsValidator
-		extends code.shubham.commons.validators.AbstractRequestValidator<String[]> {
+public abstract class AbstractCommandParamsValidator extends AbstractRequestValidator<String[]> {
 
 	private static final String MUST_BE_AN_INTEGER = "%s must be an integer";
 
@@ -16,7 +15,7 @@ public abstract class AbstractCommandParamsValidator
 	}
 
 	protected void validateIntegerParam(final String param, final String paramName) {
-		if (!code.shubham.commons.util.StringUtils.isInteger(param))
+		if (!code.shubham.commons.utils.StringUtils.isInteger(param))
 			this.putMessage(MUST_BE_OF_TYPE_INTEGER, paramName);
 	}
 
@@ -26,7 +25,7 @@ public abstract class AbstractCommandParamsValidator
 	}
 
 	protected void validateIntegerParamOrThrowException(final String param, final String paramName) {
-		if (!code.shubham.commons.util.StringUtils.isInteger(param))
+		if (!code.shubham.commons.utils.StringUtils.isInteger(param))
 			throw new InvalidParameterException(String.format("%s must be an integer", paramName));
 	}
 

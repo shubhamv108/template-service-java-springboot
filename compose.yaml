@@ -40,6 +40,14 @@ services:
       - spring.datasource.username=test
       - spring.datasource.password=root1234
       - spring.kafka.bootstrap-servers=kafka:9092
+      - spring.security.oauth2.client.registration.template-service-spring-boot.client-id=template-service-spring-boot
+      - spring.security.oauth2.client.registration.template-service-spring-boot.authorization-grant-type=authorization_code
+      - spring.security.oauth2.client.registration.template-service-spring-boot.scope=openid, profile, roles
+      - spring.security.oauth2.client.provider.template-service-spring-boot.issuer-uri=http://localhost:8180/realms/template-service-spring-boot
+      - spring.security.oauth2.client.provider.template-service-spring-boot.user-name-attribute=test
+      - spring.security.oauth2.resourceserver.jwt.issuer-uri=http://localhost:8180/realms/template-service-spring-boot
+      - spring.security.oauth2.client.registration.template-service-spring-boot.client-secret=ABgvt5rZ96furvxhTWTQPPXWh03l4ymF
+      - spring.security.oauth2.client.registration.template-service-spring-boot.redirect-uri=http://localhost:8080/login/oauth2/code/template-service-spring-boot
 
   sonar:
     image: sonarqube:7.9.5-community

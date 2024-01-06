@@ -143,7 +143,7 @@ k8s-delete-app:
 del-local-app:
 	$(call del-local-app)
 
-local-app: build
+local-app: format build
 	$(call local-app)
 
 local-app-re: del-local-app local-app

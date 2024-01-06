@@ -3,7 +3,7 @@ package code.shubham.commons.models;
 public class ModelsUtils {
 
 	public static <T> String queryString(Object object) {
-		return code.shubham.commons.models.ModelsUtils.queryString(object.getClass(), object);
+		return ModelsUtils.queryString(object.getClass(), object);
 	}
 
 	public static <T> String queryString(Class<T> clazz, Object object) {

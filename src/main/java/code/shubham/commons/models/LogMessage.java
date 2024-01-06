@@ -1,6 +1,6 @@
 package code.shubham.commons.models;
 
-import code.shubham.templateservicejavaspringboot.JsonUtils;
+import code.shubham.commons.utils.JsonUtils;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 
