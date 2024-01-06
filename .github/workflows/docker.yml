@@ -17,6 +17,12 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+      - name: Format with Gradle
+        uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
+        with:
+          arguments: format
+      - name: Setup
+        run: make local-setup
       - name: Build with Gradle
         uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
         with:
@@ -35,6 +41,8 @@ jobs:
         uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
         with:
           arguments: jacocoTestCoverageVerification
+      - name: Teardown
+        run: make teardown
       - name: Docker Login
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
