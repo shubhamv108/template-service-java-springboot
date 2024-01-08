@@ -71,12 +71,10 @@ dependencies {
 		'org.springframework.boot:spring-boot-starter-web',
 		'org.springframework.kafka:spring-kafka',
 
-		'org.springframework.boot:spring-boot-starter-oauth2-resource-server',
 		'org.springframework.boot:spring-boot-starter-security',
-//		'org.springframework.boot:spring-boot-starter-oauth2-resource-server',
+		'org.springframework.boot:spring-boot-starter-oauth2-resource-server',
 		'software.amazon.awssdk:s3:2.22.1',
 		'org.apache.commons:commons-lang3:3.14.0',
-		'org.springframework.boot:spring-boot-starter-security',
 		'org.springframework.boot:spring-boot-starter-thymeleaf',
 		'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0',
 		'org.springframework.boot:spring-boot-starter-validation',

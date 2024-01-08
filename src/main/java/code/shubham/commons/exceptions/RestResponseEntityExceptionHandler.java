@@ -25,7 +25,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 		return ResponseUtils.getErrorResponseEntity(HttpStatus.FORBIDDEN.value(), "Access denied");
 	}
 
-	@ExceptionHandler({ SQLIntegrityConstraintViolationException.class })
+	@ExceptionHandler({ SQLIntegrityConstraintViolationException.class, DataIntegrityViolationException.class })
 	public ResponseEntity<?> handleSQLIntegrityConstraintViolationException(
 			final SQLIntegrityConstraintViolationException exception, final WebRequest request) {
 		return ResponseUtils.getErrorResponseEntity(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
@@ -55,7 +55,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 		return ResponseUtils.getErrorResponseEntity(HttpStatus.BAD_REQUEST.value(), exception.getOriginalErrors());
 	}
 
-	@ExceptionHandler({ PropertyValueException.class, DataIntegrityViolationException.class, Exception.class })
+	@ExceptionHandler({ PropertyValueException.class, Exception.class })
 	public ResponseEntity<?> handleServerExceptions(final Exception exception, final WebRequest request) {
 		log.error("", exception);
 		Sentry.captureException(exception);
