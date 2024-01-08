@@ -30,8 +30,7 @@ public class Lock extends BaseIdEntity {
 	@Column(name = "expiry_at")
 	private Date expiryAt;
 
-	@Builder.Default
 	@Version
-	private Integer version = 0;
+	private Integer version;
 
 }

@@ -1,5 +1,6 @@
 package code.shubham.core.lock.web.v1.controllers;
 
+import code.shubham.commons.annotations.Role;
 import code.shubham.commons.exceptions.InvalidRequestException;
 import code.shubham.commons.utils.ResponseUtils;
 import code.shubham.commons.utils.StringUtils;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1/locks")
+@Role("ADMIN")
 @SecurityRequirement(name = "BearerAuth")
 @Tag(name = "Lock")
 public class LockController {

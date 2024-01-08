@@ -19,6 +19,7 @@ public class LockRequestDTO {
 
 	@NotNull
 	@NotEmpty
+	@Builder.Default
 	private Integer previousVersion = 0;
 
 }
