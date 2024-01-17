@@ -6,6 +6,7 @@ import code.shubham.commons.exceptions.SentryCaptureException;
 import code.shubham.commons.kafka.KafkaPublisher;
 import code.shubham.commons.models.Event;
 import code.shubham.commons.utils.JsonUtils;
+import code.shubham.commons.utils.MetricsLogger;
 import io.sentry.Sentry;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -24,11 +25,15 @@ public abstract class AbstractWorker {
 	@Autowired
 	protected KafkaPublisher kafkaPublisher;
 
+	@Autowired
+	protected MetricsLogger metricsLogger;
+
 	protected abstract void process(final Event event);
 
 	public void work(final ConsumerRecord<?, ?> consumerRecord, final Acknowledgment acknowledgment) {
 		String data = null;
 		Event event = null;
+		final Long requestStartTimestamp = System.currentTimeMillis();
 		try {
 			data = consumerRecord.value().toString();
 			event = JsonUtils.as(data, Event.class);
@@ -55,6 +60,7 @@ public abstract class AbstractWorker {
 		finally {
 			log.info(String.format("[COMPLETED]: Processing event %s", event));
 			acknowledgment.acknowledge();
+			this.metricsLogger.log(event, requestStartTimestamp, this.getClass());
 			CorrelationIDContext.clear();
 			UserIDContextHolder.clear();
 		}

@@ -18,12 +18,22 @@ public class MetricEvent {
 	@Override
 	public String toString() {
 		final StringBuilder builder = new StringBuilder();
-		builder.append(this.name).append(" ");
+		builder.append(this.name);
 
-		this.label.stream().forEach(pair -> builder.append(pair.getKey()).append("=").append(pair.getValue()));
+		final StringBuilder labelBuilder = new StringBuilder();
+		this.label.stream().forEach(pair -> {
+			if (!labelBuilder.isEmpty())
+				labelBuilder.append(',');
+			labelBuilder.append(pair.getKey()).append("=").append(pair.getValue());
+		});
 
-		builder.append(" ").append(this.timestamp).append(this.value);
-		return builder.toString();
+		return builder.append(' ')
+			.append(labelBuilder)
+			.append(' ')
+			.append(this.timestamp)
+			.append(' ')
+			.append(this.value)
+			.toString();
 	}
 
 }

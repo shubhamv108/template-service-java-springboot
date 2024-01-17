@@ -1,4 +1,4 @@
-package code.shubham.commons;
+package code.shubham.test;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

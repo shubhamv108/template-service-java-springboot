@@ -38,7 +38,7 @@ public class ContextFilter implements Filter {
 
 			final String tenantId = request.getHeader("tenantId");
 			if (tenantId != null)
-				TenantContextHolder.setTenant(tenantId);
+				TenantContextHolder.set(tenantId);
 
 			final String userEmail = Optional.ofNullable(request.getHeader("userEmail"))
 				.orElse((String) request.getAttribute("userEmail"));

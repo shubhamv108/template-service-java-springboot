@@ -19,8 +19,7 @@ jobs:
           distribution: 'temurin'
       - name: Format with Gradle
         uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
-        with:
-          arguments: format
+        run: make checkformat
       - name: Setup
         run: make local-setup
       - name: Build with Gradle
@@ -50,8 +49,6 @@ jobs:
         run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag ${{secrets.DOCKER_USER}}/template-service-java-springboot:latest
-      - name: Build the Fluentbit Docker image
-        run: docker build . --file Fluentbit-Dockerfile --tag ${{secrets.DOCKER_USER}}/template-service-java-springboot-fluentbit:latest
 #      - name: Prisma Cloud image scan
 #        id: scan
 #        uses: PaloAltoNetworks/prisma-cloud-scan@v1.5
@@ -70,5 +67,3 @@ jobs:
 #          image_name: template-service-java-springboot:latest
       - name: Docker Push To DockerHub
         run: docker push ${{secrets.DOCKER_USER}}/template-service-java-springboot
-      - name: Docker Push Fluentbit To DockerHub
-        run: docker push ${{secrets.DOCKER_USER}}/template-service-java-springboot-fluentbit

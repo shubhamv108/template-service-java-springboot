@@ -48,6 +48,7 @@ public class Label {
 		}
 
 		public Label build() {
+			this.add();
 			return new Label(this.labels);
 		}
 

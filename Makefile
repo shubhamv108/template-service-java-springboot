@@ -5,12 +5,12 @@ define start-services
 	@docker compose -f compose.yaml up --force-recreate -d --remove-orphans sonar fluentbit db kafka kafdrop elasticsearch prometheus grafana telegraf influxdb keycloak
 endef
 
-define check
+define start-check
 	@docker compose -f sonar-compose.yaml up --force-recreate -d --remove-orphans sonar-db sonar
 endef
 
 define start-app
-	@docker compose -f compose.yaml up -d app
+	@docker compose -f compose.yaml up -d web worker
 endef
 
 define teardown
@@ -58,8 +58,12 @@ define k8s-delete-app
 endef
 
 define del-local-app
-    @docker stop template-service-java-springboot
-    @docker rm template-service-java-springboot
+    @docker stop template-service-java-springboot-worker
+    @docker stop template-service-java-springboot-web
+    @docker rm template-service-java-springboot-worker
+    @docker rm template-service-java-springboot-web
+    @docker image rm template-service-java-springboot
+    @docker image rm shubham01/template-service-java-springboot
 endef
 
 
@@ -78,6 +82,9 @@ help:
 	@echo "tests: Run tests in local"
 	@echo "run-test: Run specific test"
 	@echo "############################"
+
+start-check:
+	$(call start-check)
 
 check:
 	./gradlew sonar
@@ -102,8 +109,11 @@ run-test:
 
 migrations:
 
+checkformat:
+	sudo ./gradlew checkformat
+
 format:
-	./gradlew format
+	sudo ./gradlew format
 
 install: setup
 
@@ -112,16 +122,17 @@ clean:
 	./gradlew clean
 
 build-local: clean
+	./gradlew build -x test
+
+build-local-test: clean
 	./gradlew build
 
 rm-images: clean
-	docker image rm shubham01/template-service-java-springboot-fluentbit
 	docker image rm shubham01/template-service-java-springboot
 	docker image rm template-service-java-springboot
 
 docker-build:
 	docker build -t shubham01/template-service-java-springboot:latest .
-	docker build -t shubham01/template-service-java-springboot-fluentbit:latest fluentbit
 
 build: clean build-local docker-build
 
@@ -132,7 +143,6 @@ run-local: build-local
 
 run: build
 	docker run -p 8080:8080 shubham01/template-service-java-springboot:latest --network="host"
-	docker run -p 24224:24224 shubham01/template-service-java-springboot-fluentbit:latest --network="host"
 
 k8s-apply:
 	$(call k8s-apply)
@@ -151,8 +161,12 @@ local-app-re: del-local-app local-app
 coverage:
 	./gradlew jacocoTestCoverageVerification
 
-tests:
+tests: local-setup
 	sudo ./gradlew test
+	make teardown
+
+pipeline-build: local-setup
+	./gradlew build
 
 # condb:
 #     mysql -h 127.0.0.1 -P 3306 -u test template-service-java-springboot -p

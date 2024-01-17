@@ -1,10 +1,12 @@
 package code.shubham.commons.filters;
 
 import code.shubham.commons.Constants;
+import code.shubham.commons.utils.MetricsLogger;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.ContentCachingResponseWrapper;
@@ -18,6 +20,9 @@ import java.util.function.Function;
 @Component
 @Order(3)
 public class RequestResponseLoggingFilter implements Filter {
+
+	@Autowired
+	private MetricsLogger metricsLogger;
 
 	@Override
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
@@ -44,8 +49,9 @@ public class RequestResponseLoggingFilter implements Filter {
 		responseCacheWrapperObject.copyBodyToResponse();
 
 		final Long requestStartTimestamp = (Long) request.getAttribute(Constants.RequestKey.REQUEST_START_TIMESTAMP);
-		log.info("Response:{StatusCode: {}, Headers: {}, Body: {} StartTime: {}, EndTime: {}}", response.getStatus(),
-				responseHeaders, responseBody, requestStartTimestamp, System.currentTimeMillis());
+		log.info("Response:{StatusCode: {}, Headers: {}, Body: {}}", response.getStatus(), responseHeaders,
+				responseBody);
+		this.metricsLogger.log(request);
 	}
 
 	private Map<String, Object> getHeaders(final Iterator<String> headerNames,
