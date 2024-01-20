@@ -4,7 +4,7 @@ services:
   web:
     container_name: template-service-java-springboot-web
     hostname: template-service-java-springboot-web
-    image: template-service-java-springboot-web
+    image: template-service-java-springboot
     stdin_open: true
     tty: true
     build:
@@ -52,7 +52,7 @@ services:
   worker:
     container_name: template-service-java-springboot-worker
     hostname: template-service-java-springboot-worker
-    image: template-service-java-springboot-worker
+    image: template-service-java-springboot
     stdin_open: true
     tty: true
     build:
@@ -64,7 +64,7 @@ services:
       - "/tmp:/tmp"
 
     ports:
-      - '8080:8080'
+      - '8081:8080'
 
     restart: 'on-failure'
 
@@ -144,6 +144,7 @@ services:
   db:
     image: 'mysql:latest'
     container_name: db
+    command: --slow-query-log=on --slow-query-log-file=/var/log/mysql/slow.log
     environment:
       - 'MYSQL_DATABASE=template-service-java-springboot'
       - 'MYSQL_PASSWORD=root1234'

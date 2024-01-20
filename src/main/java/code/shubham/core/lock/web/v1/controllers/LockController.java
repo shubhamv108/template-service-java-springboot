@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Role("ADMIN")
 @SecurityRequirement(name = "BearerAuth")
 @Tag(name = "Lock")
+@ConditionalOnProperty(prefix = "service", name = "module", havingValue = "web")
 public class LockController {
 
 	private final LockService service;
