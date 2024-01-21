@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface BlobRepository extends JpaRepository<Blob, String> {
+public interface BlobRepository extends JpaRepository<Blob, Long> {
 
-	Optional<Blob> findByIdAndOwner(String id, String owner);
+	Optional<Blob> findByIdAndOwner(Long id, String owner);
 
 }

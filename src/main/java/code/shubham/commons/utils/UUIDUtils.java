@@ -1,5 +1,7 @@
 package code.shubham.commons.utils;
 
+import code.shubham.commons.generators.id.implementations.UUIDGenerator;
+
 import java.util.UUID;
 
 public class UUIDUtils {

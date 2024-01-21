@@ -11,9 +11,8 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@SpringBootApplication
 @ComponentScan("code.shubham")
-@EnableJpaAuditing(auditorAwareRef = "auditorProvider")
-public @interface SpringBootJpaApplication {
+@SpringBootApplication
+public @interface SpringBootApp {
 
 }

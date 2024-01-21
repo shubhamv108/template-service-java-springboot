@@ -1,4 +1,4 @@
-package code.shubham.commons.dao.entities.base;
+package code.shubham.commons.dao.base.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
@@ -19,7 +19,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
-public abstract class BaseIdEntity implements Serializable {
+public abstract class BaseAbstractIdEntity implements Serializable {
 
 	private static final long serialVersionUID = 8953224502234883513L;
 
@@ -36,7 +36,7 @@ public abstract class BaseIdEntity implements Serializable {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		BaseIdEntity that = (BaseIdEntity) o;
+		BaseAbstractIdEntity that = (BaseAbstractIdEntity) o;
 		return this.id.equals(that.id);
 	}
 

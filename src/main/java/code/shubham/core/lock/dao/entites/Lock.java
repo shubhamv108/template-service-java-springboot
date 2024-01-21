@@ -1,11 +1,11 @@
-package code.shubham.core.lock.web.v1.dao.entites;
+package code.shubham.core.lock.dao.entites;
 
-import code.shubham.commons.dao.entities.base.BaseIdEntity;
+import code.shubham.commons.dao.base.entities.BaseAbstractDistributedIdEntity;
+import code.shubham.commons.dao.base.entities.BaseAbstractIdEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
 
@@ -17,7 +17,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "locks")
-public class Lock extends BaseIdEntity {
+public class Lock extends BaseAbstractDistributedIdEntity {
 
 	@Column(nullable = false, unique = true, length = 64)
 	private String name;

@@ -48,7 +48,7 @@ public class LockController {
 
 		return ResponseUtils.getDataResponseEntity(HttpStatus.OK.value(),
 				this.service.fetchByName(name)
-					.map(lock -> LockDTO.builder().version(lock.getVersion()).build())
+					.map(lock -> LockDTO.builder().lockId(lock.getId()).version(lock.getVersion()).build())
 					.orElseThrow(() -> new InvalidRequestException("name", "no lock for name", name)));
 
 	}

@@ -1,11 +1,18 @@
-package code.shubham.commons.utils;
+package code.shubham.commons.generators.id.implementations;
+
+import code.shubham.commons.generators.id.IDGenerator;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
-public class UUIDGenerator {
+public class UUIDGenerator implements IDGenerator<String> {
+
+	@Override
+	public String generate() {
+		return UUID.randomUUID().toString();
+	}
 
 	public static UUID generateType5UUID(String name) {
 		try {

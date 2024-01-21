@@ -21,10 +21,10 @@ public class Utils {
 		return null;
 	}
 
-	public static void validateUserOrThrowException(final String userId) {
+	public static void validateUserOrThrowException(final Long userId) {
 		if (!userId.equals(UserIDContextHolder.get()) && !RoleContextHolder.isAdmin())
 			throw new InvalidRequestException("userId", "User with userId: %s not allowed to perform the operation",
-					userId);
+					String.valueOf(userId));
 	}
 
 }

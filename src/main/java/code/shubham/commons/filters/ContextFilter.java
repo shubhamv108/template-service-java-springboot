@@ -34,7 +34,7 @@ public class ContextFilter implements Filter {
 			final String userId = Optional.ofNullable(request.getHeader("userId"))
 				.orElse((String) request.getAttribute("userId"));
 			if (userId != null)
-				UserIDContextHolder.set(userId);
+				UserIDContextHolder.set(Long.valueOf(userId));
 
 			final String tenantId = request.getHeader("tenantId");
 			if (tenantId != null)
@@ -43,7 +43,7 @@ public class ContextFilter implements Filter {
 			final String userEmail = Optional.ofNullable(request.getHeader("userEmail"))
 				.orElse((String) request.getAttribute("userEmail"));
 			if (userEmail != null)
-				UserContextHolder.set(new UserDTO(userId, userEmail));
+				UserContextHolder.set(new UserDTO(Long.valueOf(userId), userEmail));
 
 			chain.doFilter(servletRequest, servletResponse);
 		}

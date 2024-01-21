@@ -1,6 +1,6 @@
 package code.shubham.core.userprofile.dao.entities;
 
-import code.shubham.commons.dao.entities.base.BaseAbstractAuditableEntity;
+import code.shubham.commons.dao.base.entities.BaseAbstractAuditableEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -16,7 +16,7 @@ import lombok.*;
 public class UserProfile extends BaseAbstractAuditableEntity {
 
 	@Column(nullable = false, unique = true)
-	private String userId;
+	private Long userId;
 
 	private String address;
 

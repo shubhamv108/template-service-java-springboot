@@ -1,23 +1,22 @@
-package code.shubham.core.lock.web.v1.dao.repositories;
+package code.shubham.core.lock.dao.repositories;
 
 import code.shubham.core.lock.Constants;
-import code.shubham.core.lock.web.v1.dao.entites.Lock;
+import code.shubham.core.lock.dao.entites.Lock;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
 import java.util.Optional;
 
 @Repository
-public interface LockRepository extends JpaRepository<Lock, String> {
+public interface LockRepository extends JpaRepository<Lock, Long> {
 
 	@Transactional
 	@Modifying
 	@Query(nativeQuery = true, value = Constants.Queries.INSERT)
-	int insert(String name, int version, String owner, long timeToLiveInSeconds);
+	int insert(Long id, String name, int version, String owner, long timeToLiveInSeconds);
 
 	Optional<Lock> findByName(String name);
 

@@ -34,7 +34,7 @@ public class BlobService {
 			.build();
 	}
 
-	public Boolean doesBlobExist(final String id, final String owner) {
+	public Boolean doesBlobExist(final Long id, final String owner) {
 		return this.repository.findByIdAndOwner(id, owner)
 			.map(blob -> true)
 			// S3Utils.doesObjectExist(this.defaultRegion, blob.getBucket(),

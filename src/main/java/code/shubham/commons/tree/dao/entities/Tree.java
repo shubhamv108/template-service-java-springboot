@@ -1,6 +1,6 @@
 package code.shubham.commons.tree.dao.entities;
 
-import code.shubham.commons.dao.entities.base.BaseIntegerIdEntity;
+import code.shubham.commons.dao.base.entities.BaseAbstractIntegerIdEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Index;
@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "trees", indexes = { @Index(name = "index_trees_parentId", columnList = "parentId") })
-public class Tree extends BaseIntegerIdEntity {
+public class Tree extends BaseAbstractIntegerIdEntity {
 
 	private Integer parentId;
 

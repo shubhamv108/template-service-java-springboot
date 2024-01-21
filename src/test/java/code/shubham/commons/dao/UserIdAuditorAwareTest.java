@@ -1,4 +1,4 @@
-package code.shubham.commons.dao.entities;
+package code.shubham.commons.dao;
 
 import code.shubham.commons.TestCommonConstants;
 import code.shubham.commons.contexts.UserIDContextHolder;
@@ -22,7 +22,7 @@ class UserIdAuditorAwareTest {
 		UserIDContextHolder.set(TestCommonConstants.USER_ID);
 		final UserIdAuditorAware auditorAware = new UserIdAuditorAware();
 
-		final Optional<String> response = auditorAware.getCurrentAuditor();
+		final Optional<Long> response = auditorAware.getCurrentAuditor();
 
 		Assertions.assertTrue(response.isPresent());
 		Assertions.assertEquals(TestCommonConstants.USER_ID, response.get());
@@ -33,10 +33,10 @@ class UserIdAuditorAwareTest {
 		UserIDContextHolder.set(null);
 		final UserIdAuditorAware auditorAware = new UserIdAuditorAware();
 
-		final Optional<String> response = auditorAware.getCurrentAuditor();
+		final Optional<Long> response = auditorAware.getCurrentAuditor();
 
 		Assertions.assertTrue(response.isPresent());
-		Assertions.assertEquals("$$NONE$$", response.get());
+		Assertions.assertEquals(-1, response.get());
 	}
 
 }

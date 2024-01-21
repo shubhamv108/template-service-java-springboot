@@ -1,4 +1,4 @@
-package code.shubham.commons.dao.entities.base;
+package code.shubham.commons.dao.base.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -21,7 +21,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = { "createdAt", "updatedAt" }, allowGetters = true)
-public abstract class BaseAbstractAuditableEntity extends BaseIdEntity {
+public abstract class BaseAbstractAuditableEntity extends BaseAbstractDistributedIdEntity {
 
 	private static final long serialVersionUID = 8953324502234883513L;
 
@@ -43,13 +43,11 @@ public abstract class BaseAbstractAuditableEntity extends BaseIdEntity {
 	private Integer version = 0;
 
 	@JsonIgnore
-	@Column(name = "created_by", updatable = false, columnDefinition = "VARCHAR(36)", length = 36)
 	@CreatedBy
-	private String createdBy;
+	private Long createdBy;
 
 	@JsonIgnore
-	@Column(name = "updated_by", columnDefinition = "VARCHAR(36)", length = 36)
 	@LastModifiedBy
-	private String updatedBy;
+	private Long updatedBy;
 
 }

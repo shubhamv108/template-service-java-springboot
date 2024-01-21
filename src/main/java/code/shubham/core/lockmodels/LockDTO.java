@@ -9,6 +9,8 @@ import lombok.Data;
 @Data
 public class LockDTO {
 
+	private Long lockId;
+
 	@NotNull
 	@NotEmpty
 	private Integer version;

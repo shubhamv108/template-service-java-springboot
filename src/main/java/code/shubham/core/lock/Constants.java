@@ -4,7 +4,7 @@ public interface Constants {
 
 	interface Queries {
 
-		String INSERT = "INSERT INTO locks VALUES (UUID(), ?, ?, ?, TIMESTAMPADD(SECOND, ?, NOW()))";
+		String INSERT = "INSERT INTO locks VALUES (?, ?, ?, ?, TIMESTAMPADD(SECOND, ?, NOW()))";
 
 		String LOCK = "UPDATE locks SET owner = ?, expiry_at = TIMESTAMPADD(SECOND, ?, NOW()), version = version + 1 WHERE name = ? AND version = ? AND (expiry_at is null OR expiry_at < NOW())";
 

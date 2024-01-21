@@ -63,7 +63,7 @@ class UserProfileControllerTest extends AbstractSpringBootMVCTest {
 				.content(as(request)))
 			.andExpect(status().is(200))
 			.andExpect(content().json("{\n" + "    \"statusCode\": 200,\n" + "    \"data\": {\n"
-					+ "        \"userId\": \"" + TestCommonConstants.USER_ID + "\",\n"
+					+ "        \"userId\": " + TestCommonConstants.USER_ID + ",\n"
 					+ "        \"address\": \"address\"\n" + "    },\n" + "    \"error\": null\n" + "}"));
 
 		final var profiles = this.repository.findByUserId(TestCommonConstants.USER_ID);
@@ -85,7 +85,7 @@ class UserProfileControllerTest extends AbstractSpringBootMVCTest {
 				.content(as(request)))
 			.andExpect(status().is(200))
 			.andExpect(content().json("{\n" + "    \"statusCode\": 200,\n" + "    \"data\": {\n"
-					+ "        \"userId\": \"" + TestCommonConstants.USER_ID + "\",\n"
+					+ "        \"userId\": " + TestCommonConstants.USER_ID + ",\n"
 					+ "        \"address\": \"address\"\n" + "    },\n" + "    \"error\": null\n" + "}"));
 
 		final var profiles = this.repository.findByUserId(TestCommonConstants.USER_ID);
@@ -103,7 +103,7 @@ class UserProfileControllerTest extends AbstractSpringBootMVCTest {
 		this.mockMvc
 			.perform(MockMvcRequestBuilders.get(this.baseURL)
 				.contentType(MediaType.APPLICATION_JSON)
-				.param("userId", TestCommonConstants.USER_ID)
+				.param("userId", TestCommonConstants.USER_ID.toString())
 				.content(as(request)))
 			.andExpect(status().is(400))
 			.andExpect(content()
@@ -124,12 +124,12 @@ class UserProfileControllerTest extends AbstractSpringBootMVCTest {
 		this.mockMvc
 			.perform(MockMvcRequestBuilders.get(this.baseURL)
 				.contentType(MediaType.APPLICATION_JSON)
-				.param("userId", "INVALID_USER_ID")
+				.param("userId", "1000897923487")
 				.content(as(request)))
 			.andExpect(status().is(400))
 			.andExpect(content().json("{\n" + "    \"statusCode\": 400,\n" + "    \"data\": null,\n"
 					+ "    \"error\": [\n" + "        {\n" + "            \"userId\": [\n"
-					+ "                \"User with userId: INVALID_USER_ID not allowed to perform the operation\"\n"
+					+ "                \"User with userId: 1000897923487 not allowed to perform the operation\"\n"
 					+ "            ]\n" + "        }\n" + "    ]\n" + "}"));
 
 		final var profiles = this.repository.findByUserId(TestCommonConstants.USER_ID);
@@ -146,11 +146,11 @@ class UserProfileControllerTest extends AbstractSpringBootMVCTest {
 		this.mockMvc
 			.perform(MockMvcRequestBuilders.get(this.baseURL)
 				.contentType(MediaType.APPLICATION_JSON)
-				.param("userId", TestCommonConstants.USER_ID)
+				.param("userId", TestCommonConstants.USER_ID.toString())
 				.content(as(request)))
 			.andExpect(status().is(200))
 			.andExpect(content().json("{\n" + "    \"statusCode\": 200,\n" + "    \"data\": {\n"
-					+ "        \"userId\": \"" + TestCommonConstants.USER_ID + "\",\n"
+					+ "        \"userId\": " + TestCommonConstants.USER_ID + ",\n"
 					+ "        \"address\": \"address\"\n" + "    },\n" + "    \"error\": null\n" + "}"));
 
 		final var profiles = this.repository.findByUserId(TestCommonConstants.USER_ID);

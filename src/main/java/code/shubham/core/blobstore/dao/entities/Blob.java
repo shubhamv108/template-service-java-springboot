@@ -1,6 +1,6 @@
 package code.shubham.core.blobstore.dao.entities;
 
-import code.shubham.commons.dao.entities.base.BaseAbstractAuditableEntity;
+import code.shubham.commons.dao.base.entities.BaseAbstractAuditableEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

@@ -17,7 +17,7 @@ public class Event {
 
 	private String uniqueReferenceId; // idempotency key
 
-	private String userId;
+	private Long userId;
 
 	private Date createdAt;
 

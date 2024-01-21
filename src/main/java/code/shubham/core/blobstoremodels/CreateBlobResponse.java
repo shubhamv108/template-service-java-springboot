@@ -9,7 +9,7 @@ import lombok.Data;
 public class CreateBlobResponse {
 
 	@NotNull
-	private String blobId;
+	private Long blobId;
 
 	@NotNull
 	private String uploadUrl;

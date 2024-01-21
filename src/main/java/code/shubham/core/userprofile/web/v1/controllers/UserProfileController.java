@@ -42,7 +42,7 @@ public class UserProfileController {
 	}
 
 	@GetMapping
-	public ResponseEntity<?> getByUserId(@RequestParam("userId") final String userId) {
+	public ResponseEntity<?> getByUserId(@RequestParam("userId") final Long userId) {
 		Utils.validateUserOrThrowException(userId);
 		return ResponseUtils.getDataResponseEntity(HttpStatus.OK, this.service.fetchByUserId(userId));
 	}

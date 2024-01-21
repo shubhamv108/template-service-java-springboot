@@ -2,13 +2,13 @@ package code.shubham.commons.contexts;
 
 public class UserIDContextHolder {
 
-	private static final ThreadLocal<String> CONTEXT = new ThreadLocal<>();
+	private static final ThreadLocal<Long> CONTEXT = new ThreadLocal<>();
 
-	public static void set(final String id) {
+	public static void set(final Long id) {
 		CONTEXT.set(id);
 	}
 
-	public static String get() {
+	public static Long get() {
 		return CONTEXT.get();
 	}
 

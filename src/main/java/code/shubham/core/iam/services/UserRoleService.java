@@ -22,13 +22,13 @@ public class UserRoleService {
 		this.roleService = roleService;
 	}
 
-	public UserRole setRoleToUser(final String roleName, final String userId) {
+	public UserRole setRoleToUser(final String roleName, final Long userId) {
 		return this.roleService.getRoleByName(roleName)
 			.map(role -> this.repository.save(UserRole.builder().role(role).userId(userId).build()))
 			.orElseThrow(() -> new InvalidParameterException("No role with name: %s", roleName));
 	}
 
-	public Collection<String> getAllRoles(String userId) {
+	public Collection<String> getAllRoles(final Long userId) {
 		return this.repository.findByUserId(userId)
 			.stream()
 			.map(userRole -> userRole.getRole().getName())

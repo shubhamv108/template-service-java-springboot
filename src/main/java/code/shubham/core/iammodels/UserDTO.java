@@ -1,4 +1,4 @@
 package code.shubham.core.iammodels;
 
-public record UserDTO(String id, String email) {
+public record UserDTO(Long id, String email) {
 }

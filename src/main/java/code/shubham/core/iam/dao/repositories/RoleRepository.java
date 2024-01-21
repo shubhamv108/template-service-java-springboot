@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role, String> {
+public interface RoleRepository extends JpaRepository<Role, Long> {
 
 	@Query(value = "select * from roles limit 10", nativeQuery = true)
 	Set<Role> findAnyTen();
