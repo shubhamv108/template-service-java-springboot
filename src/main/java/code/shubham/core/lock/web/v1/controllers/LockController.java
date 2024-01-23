@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpStatus;
@@ -33,14 +34,10 @@ import org.springframework.web.bind.annotation.RestController;
 @SecurityRequirement(name = "BearerAuth")
 @Tag(name = "Lock")
 @ConditionalOnProperty(prefix = "service", name = "module", havingValue = "web")
+@RequiredArgsConstructor
 public class LockController {
 
 	private final LockService service;
-
-	@Autowired
-	public LockController(final LockService service) {
-		this.service = service;
-	}
 
 	@GetMapping("/{name}")
 	public ResponseEntity<?> getByName(@PathVariable @NotNull @NotEmpty final String name) {

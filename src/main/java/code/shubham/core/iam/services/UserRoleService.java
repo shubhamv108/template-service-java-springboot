@@ -3,24 +3,22 @@ package code.shubham.core.iam.services;
 import code.shubham.commons.exceptions.InvalidParameterException;
 import code.shubham.core.iam.dao.entities.UserRole;
 import code.shubham.core.iam.dao.repositories.UserRoleRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class UserRoleService {
 
 	private final UserRoleRepository repository;
 
 	private final RoleService roleService;
-
-	@Autowired
-	public UserRoleService(final UserRoleRepository repository, final RoleService roleService) {
-		this.repository = repository;
-		this.roleService = roleService;
-	}
 
 	public UserRole setRoleToUser(final String roleName, final Long userId) {
 		return this.roleService.getRoleByName(roleName)

@@ -4,6 +4,7 @@ import code.shubham.commons.aws.S3Utils;
 import code.shubham.core.blobstore.dao.entities.Blob;
 import code.shubham.core.blobstore.dao.repositories.BlobRepository;
 import code.shubham.core.blobstoremodels.CreateBlobResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,17 +14,13 @@ import java.util.Map;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class BlobService {
 
 	private final BlobRepository repository;
 
 	@Value("${aws.default.region}")
 	private String defaultRegion;
-
-	@Autowired
-	public BlobService(final BlobRepository repository) {
-		this.repository = repository;
-	}
 
 	public CreateBlobResponse getPreSignedUploadUrl(final String owner, final String bucket, final String key,
 			final Map<String, String> metadata) {

@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpStatus;
@@ -21,14 +22,10 @@ import org.springframework.web.bind.annotation.*;
 @SecurityRequirement(name = "BearerAuth")
 @Tag(name = "User Profiles")
 @ConditionalOnProperty(prefix = "service", name = "module", havingValue = "web")
+@RequiredArgsConstructor
 public class UserProfileController {
 
 	private final UserProfileService service;
-
-	@Autowired
-	public UserProfileController(final UserProfileService service) {
-		this.service = service;
-	}
 
 	@Operation(description = "PUT Profile Information",
 			summary = "Idempotent endpoint for setting user profile information like address etc",

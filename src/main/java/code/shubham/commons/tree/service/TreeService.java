@@ -5,6 +5,7 @@ import code.shubham.commons.tree.dao.repositories.TreeRepository;
 import code.shubham.commons.treecommons.ITreeService;
 import code.shubham.commons.treemodels.TreeNodeDTO;
 import code.shubham.commons.treemodels.TreePathDTO;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,14 +15,10 @@ import java.util.Optional;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class TreeService implements ITreeService {
 
 	private final TreeRepository repository;
-
-	@Autowired
-	public TreeService(TreeRepository repository) {
-		this.repository = repository;
-	}
 
 	@Override
 	public Tree save(final TreeNodeDTO node, final Integer parentId) {

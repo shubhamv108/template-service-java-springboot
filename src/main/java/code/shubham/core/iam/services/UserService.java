@@ -6,25 +6,23 @@ import code.shubham.core.iamcommons.IUserService;
 import code.shubham.core.iammodels.GetOrCreateUser;
 import code.shubham.core.iammodels.GetUserResponse;
 import code.shubham.core.iammodels.UserDTO;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Slf4j
 @Transactional
 @Service
+@RequiredArgsConstructor
 public class UserService implements IUserService {
 
 	private final UserRepository repository;
 
 	private final UserRoleService userRoleService;
-
-	@Autowired
-	public UserService(final UserRepository repository, final UserRoleService userRoleService) {
-		this.repository = repository;
-		this.userRoleService = userRoleService;
-	}
 
 	@Override
 	public GetUserResponse getOrCreate(final GetOrCreateUser.Request request) {

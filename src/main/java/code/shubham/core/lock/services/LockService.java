@@ -3,20 +3,19 @@ package code.shubham.core.lock.services;
 import code.shubham.commons.generators.id.implementations.SnowflakeSequenceIdGenerator;
 import code.shubham.core.lock.dao.entites.Lock;
 import code.shubham.core.lock.dao.repositories.LockRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class LockService {
 
 	private final LockRepository repository;
-
-	@Autowired
-	public LockService(final LockRepository repository) {
-		this.repository = repository;
-	}
 
 	public boolean lock(final String name, final int previousVersion, final String owner,
 			final long timeToLiveInSeconds) {
