@@ -108,8 +108,8 @@ class AccountProfileControllerTest extends AbstractSpringBootMVCTest {
 			.andExpect(status().is(400))
 			.andExpect(content().json("{\n" + "    \"statusCode\": 400,\n" + "    \"data\": null,\n"
 					+ "    \"error\": [\n" + "        {\n" + "            \"accountId\": [\n"
-					+ "                \"No account profile found for accountId: " + TestCommonConstants.ACCOUNT_ID + "\"\n"
-					+ "            ]\n" + "        }\n" + "    ]\n" + "}"));
+					+ "                \"No account profile found for accountId: " + TestCommonConstants.ACCOUNT_ID
+					+ "\"\n" + "            ]\n" + "        }\n" + "    ]\n" + "}"));
 
 		final var profiles = this.repository.findByAccountId(TestCommonConstants.ACCOUNT_ID);
 

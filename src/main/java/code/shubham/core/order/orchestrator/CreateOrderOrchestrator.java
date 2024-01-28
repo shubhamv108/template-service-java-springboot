@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Scope("prototype")
-@Component("CreateOrderOrchestrator")
+// @Component("CreateOrderOrchestrator")
 @RequiredArgsConstructor
 public class CreateOrderOrchestrator {
 

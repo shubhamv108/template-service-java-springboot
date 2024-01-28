@@ -94,7 +94,7 @@ springdoc:
 
 documents:
     bucket:
-        name: documents
+        name: documentssstore
 
 order:
     item:

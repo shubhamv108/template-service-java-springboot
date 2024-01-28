@@ -25,4 +25,14 @@ public class OrderItemCreatedState extends AbstractOrderItemState {
 		return false;
 	}
 
+	@Override
+	public boolean initiateReturn() {
+		return false;
+	}
+
+	@Override
+	public boolean returnSuccess() {
+		return false;
+	}
+
 }

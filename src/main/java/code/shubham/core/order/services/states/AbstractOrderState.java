@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SuperBuilder
-@Builder
 @RequiredArgsConstructor
 public abstract class AbstractOrderState {
 

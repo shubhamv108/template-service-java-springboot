@@ -25,7 +25,7 @@ public class OrderItemService {
 
 	private final OrderItemRepository repository;
 
-	private final IInventoryService inventoryService;
+	// private final IInventoryService inventoryService;
 
 	public List<OrderItem> save(final Long orderId, final List<OrderItemDTO> items) {
 		final List<OrderItem> orderItems = items.stream()
@@ -40,8 +40,10 @@ public class OrderItemService {
 
 		final var persisted = this.save(orderItems, orderId);
 
-		items.forEach(item -> this.inventoryService.applyQuantityOperation(item.getInventoryId(), item.getQuantity(),
-				item.getClientReferenceId()));
+		// items.forEach(item ->
+		// this.inventoryService.applyQuantityOperation(item.getInventoryId(),
+		// item.getQuantity(),
+		// item.getClientReferenceId()));
 		persisted.forEach(item -> item.setStatus(OrderItemStatus.AWAITING_PAYMENT));
 		return this.save(persisted, orderId);
 	}
