@@ -24,7 +24,7 @@
     Port 9243
     # When Logstash_Format is enabled, the Index name is composed using a prefix and the date
     Logstash_Format True
-    # HTTP_User <user>
+    # HTTP_User <account>
     # HTTP_Passwd <pw>
     # Alternative time key, useful if your log entries contain an @timestamp field that is used by Elasticsearch
     # Time_Key es_time

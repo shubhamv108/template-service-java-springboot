@@ -1,7 +1,7 @@
 package code.shubham.commons.workers;
 
 import code.shubham.commons.contexts.CorrelationIDContext;
-import code.shubham.commons.contexts.UserIDContextHolder;
+import code.shubham.commons.contexts.AccountIDContextHolder;
 import code.shubham.commons.exceptions.SentryCaptureException;
 import code.shubham.commons.kafka.KafkaPublisher;
 import code.shubham.commons.models.Event;
@@ -45,7 +45,7 @@ public abstract class AbstractWorker {
 			log.info(String.format("[STARTED]: Processing event %s", event));
 
 			CorrelationIDContext.set(event.getCorrelationId());
-			UserIDContextHolder.set(event.getUserId());
+			AccountIDContextHolder.set(event.getUserId());
 
 			log.info("[Received] Event data: {}", event.getData());
 			this.process(event);
@@ -62,7 +62,7 @@ public abstract class AbstractWorker {
 			acknowledgment.acknowledge();
 			this.metricsLogger.log(event, requestStartTimestamp, this.getClass());
 			CorrelationIDContext.clear();
-			UserIDContextHolder.clear();
+			AccountIDContextHolder.clear();
 		}
 	}
 

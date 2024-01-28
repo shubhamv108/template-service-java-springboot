@@ -1,7 +1,7 @@
 package code.shubham.commons.utils;
 
 import code.shubham.commons.contexts.RoleContextHolder;
-import code.shubham.commons.contexts.UserIDContextHolder;
+import code.shubham.commons.contexts.AccountIDContextHolder;
 import code.shubham.commons.exceptions.InvalidRequestException;
 
 import java.util.Iterator;
@@ -21,10 +21,10 @@ public class Utils {
 		return null;
 	}
 
-	public static void validateUserOrThrowException(final Long userId) {
-		if (!userId.equals(UserIDContextHolder.get()) && !RoleContextHolder.isAdmin())
-			throw new InvalidRequestException("userId", "User with userId: %s not allowed to perform the operation",
-					String.valueOf(userId));
+	public static void validateAccountOrThrowException(final Long accountId) {
+		if (!accountId.equals(AccountIDContextHolder.get()) && !RoleContextHolder.isAdmin())
+			throw new InvalidRequestException("accountId",
+					"Account with accountId: %s not allowed to perform the operation", String.valueOf(accountId));
 	}
 
 }

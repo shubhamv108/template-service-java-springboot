@@ -1,0 +1,8 @@
+package code.shubham.core.order.items.dao.entities;
+
+public enum OrderItemStatus {
+
+	CREATED, AWAITING_PAYMENT, CONFIRMED, SHIPPING, DELIVERED, RETURNING, RETURNED, REFUND_INITIATED, REFUNDED,
+	CANCELED, SHIPPED, COMPLETED
+
+}

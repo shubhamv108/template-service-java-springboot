@@ -1,10 +1,10 @@
 package code.shubham.commons.filters;
 
-import code.shubham.commons.contexts.TenantContextHolder;
-import code.shubham.commons.contexts.UserContextHolder;
-import code.shubham.commons.contexts.UserIDContextHolder;
-import code.shubham.core.iam.services.UserService;
-import code.shubham.core.iammodels.UserDTO;
+import code.shubham.commons.contexts.TenantIDContextHolder;
+import code.shubham.commons.contexts.AccountContextHolder;
+import code.shubham.commons.contexts.AccountIDContextHolder;
+import code.shubham.core.iam.services.AccountService;
+import code.shubham.core.iammodels.AccountDTO;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -19,11 +19,11 @@ import java.util.Optional;
 @Order(7)
 public class ContextFilter implements Filter {
 
-	private final UserService userService;
+	private final AccountService accountService;
 
 	@Autowired
-	public ContextFilter(final UserService userService) {
-		this.userService = userService;
+	public ContextFilter(final AccountService accountService) {
+		this.accountService = accountService;
 	}
 
 	@Override
@@ -34,23 +34,23 @@ public class ContextFilter implements Filter {
 			final String userId = Optional.ofNullable(request.getHeader("userId"))
 				.orElse((String) request.getAttribute("userId"));
 			if (userId != null)
-				UserIDContextHolder.set(Long.valueOf(userId));
+				AccountIDContextHolder.set(Long.valueOf(userId));
 
 			final String tenantId = request.getHeader("tenantId");
 			if (tenantId != null)
-				TenantContextHolder.set(tenantId);
+				TenantIDContextHolder.set(tenantId);
 
 			final String userEmail = Optional.ofNullable(request.getHeader("userEmail"))
 				.orElse((String) request.getAttribute("userEmail"));
 			if (userEmail != null)
-				UserContextHolder.set(new UserDTO(Long.valueOf(userId), userEmail));
+				AccountContextHolder.set(new AccountDTO(Long.valueOf(userId), userEmail));
 
 			chain.doFilter(servletRequest, servletResponse);
 		}
 		finally {
-			UserContextHolder.clear();
-			UserIDContextHolder.clear();
-			TenantContextHolder.clear();
+			AccountContextHolder.clear();
+			AccountIDContextHolder.clear();
+			TenantIDContextHolder.clear();
 		}
 	}
 

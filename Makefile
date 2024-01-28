@@ -35,6 +35,11 @@ define setup
 	@docker compose -f compose.yaml up -d --build --force-recreate --remove-orphans
 endef
 
+define cp-githooks
+	@cp scripts/pre-commit .git/hooks/pre-commit
+	@cp scripts/pre-push .git/hooks/pre-push
+endef
+
 define k8s-apply
 	kubectl create namespace argocd
     kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
@@ -103,6 +108,9 @@ start-services:
 
 teardown:
 	$(call teardown, "Tearing down...")
+
+cp-githooks:
+	$(call cp-githooks)
 
 run-test:
 	@docker-compose -f compose.yaml up --build --force-recreate -d service

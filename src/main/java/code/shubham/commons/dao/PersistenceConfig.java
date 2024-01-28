@@ -11,7 +11,7 @@ public class PersistenceConfig {
 
 	@Bean
 	public AuditorAware<Long> auditorProvider() {
-		return new UserIdAuditorAware();
+		return new IdAuditorAware();
 	}
 
 }

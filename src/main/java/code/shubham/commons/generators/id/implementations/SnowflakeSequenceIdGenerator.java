@@ -82,9 +82,4 @@ public class SnowflakeSequenceIdGenerator implements IDGenerator<Long> {
 		return currentTimeStamp;
 	}
 
-	public static void main(String[] args) {
-		SnowflakeSequenceIdGenerator generator = new SnowflakeSequenceIdGenerator(new NodeIdGenerator().generate());
-		System.out.println(generator.generate());
-	}
-
 }

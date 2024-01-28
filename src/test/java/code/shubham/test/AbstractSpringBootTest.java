@@ -2,7 +2,7 @@ package code.shubham.test;
 
 import code.shubham.TemplateServiceJavaSpringBootApplication;
 import code.shubham.commons.contexts.RoleContextHolder;
-import code.shubham.commons.contexts.UserIDContextHolder;
+import code.shubham.commons.contexts.AccountIDContextHolder;
 import code.shubham.commons.kafka.KafkaPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +24,7 @@ public abstract class AbstractSpringBootTest extends AbstractTest {
 	protected void setUp() {
 		super.setUp();
 		RoleContextHolder.set(Set.of());
-		UserIDContextHolder.set(null);
+		AccountIDContextHolder.set(null);
 	}
 
 	protected void truncate(final String... tables) {

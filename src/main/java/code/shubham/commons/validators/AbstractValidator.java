@@ -42,13 +42,21 @@ public abstract class AbstractValidator<OBJECT> implements IValidator<OBJECT> {
 
 	@Override
 	public Map<String, Collection<String>> getResult() {
-		Map<String, Collection<String>> copy = new java.util.LinkedHashMap<>();
+		final Map<String, Collection<String>> copy = new java.util.LinkedHashMap<>();
 		this.messages.forEach((k, v) -> copy.put(k, new java.util.ArrayList<String>(v)));
 		return copy;
 	}
 
 	private Map<String, Collection<String>> getMessages() {
 		return this.messages;
+	}
+
+	protected boolean isNotValidId(final Long id) {
+		return id == null;
+	}
+
+	protected boolean isNotValidStringId(final String id) {
+		return id == null || id.length() < 36;
 	}
 
 }

@@ -14,6 +14,7 @@ import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignReques
 
 import java.time.Duration;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 public class S3Utils {
@@ -44,8 +45,8 @@ public class S3Utils {
 	}
 
 	/* Create a pre-signed URL to download an object in a subsequent GET request. */
-	public static String createPresignedGetUrl(String bucketName, String keyName) {
-		try (S3Presigner presigner = S3Presigner.create()) {
+	public static String createPresignedGetUrl(final String region, final String bucketName, String keyName) {
+		try (final S3Presigner presigner = S3Presigner.builder().region(Region.of(region)).build()) {
 
 			GetObjectRequest objectRequest = GetObjectRequest.builder().bucket(bucketName).key(keyName).build();
 
@@ -63,7 +64,27 @@ public class S3Utils {
 		}
 	}
 
-	public static boolean doesObjectExist(final String region, final String bucket, final String key) {
+	public static boolean doesObjectExist(final String region, final String bucket, final String key, String checksum) {
+		try {
+			final S3Client s3 = S3Client.builder().region(Region.of(region)).build();
+
+			final GetObjectAttributesResponse response = s3
+				.getObjectAttributes(GetObjectAttributesRequest.builder().bucket(bucket).key(key).build());
+			return !response.deleteMarker() && Optional.ofNullable(checksum)
+				.map(sum -> sum.equals(response.checksum().checksumCRC32C()))
+				.orElse(true);
+		}
+		catch (final NoSuchKeyException exception) {
+			log.error("No such key!!!", exception);
+			return false;
+		}
+		catch (final SdkException exception) {
+			log.error("Exception while invoking S3::getObjectAttributes", exception);
+			throw new InternalServerException("Something went wrong");
+		}
+	}
+
+	public static boolean getMetadata(final String region, final String bucket, final String key) {
 		try {
 			final S3Client s3 = S3Client.builder().region(Region.of(region)).build();
 

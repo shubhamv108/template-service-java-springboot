@@ -4,7 +4,7 @@ public interface TestCommonConstants {
 
 	String LOCALHOST = "http://localhost:8080";
 
-	Long USER_ID = 67898734L;
+	Long ACCOUNT_ID = 67898734L;
 
 	String USER_EMAIL = "test@test.com";
 

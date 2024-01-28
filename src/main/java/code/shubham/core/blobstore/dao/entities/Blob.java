@@ -24,6 +24,8 @@ public class Blob extends BaseAbstractAuditableEntity {
 	@Column(nullable = false)
 	private String owner;
 
+	private String checksum;
+
 	public String getFullKey() {
 		return keyName + "/" + getId();
 	}

@@ -1,0 +1,128 @@
+aws:
+    default:
+        region: ap-south-1
+bucket:
+    name: template-service-java-springboot-documents
+kafka:
+    group:
+        id: template-service-java-springboot
+    topic:
+        name: template-service-java-springboot
+logging:
+    level:
+        org:
+            hibernate: ERROR
+            springframework:
+                web: DEBUG
+management:
+    endpoint:
+        health:
+            show-details: always
+    endpoints:
+        web:
+            exposure:
+                include: health,prometheus
+    health:
+        probes:
+            enabled: true
+    metrics:
+        tags:
+            application: ${spring.application.name}
+    security:
+        enabled: false
+security:
+    basic:
+        enabled: false
+sentry:
+    dsn: https://e5f2aafaa9b3bb17906f4d0eb123b3f0@o4505834144399360.ingest.sentry.io/4505834146889728
+    traces-sample-rate: 1.0
+server:
+    port: 8080
+    servlet:
+        context-path: /api
+service:
+    module: web
+    name: template-service-java-springboot
+spring:
+    datasource:
+        hikari:
+            conserversenteventsnectionTimeout: 30000
+            idleTimeout: 600000
+            maxLifetime: 1800000
+        password: root1234
+        url: jdbc:mysql://localhost:3306/template-service-java-springboot?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&autoReconnect=true&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+        username: root
+    flyway:
+        baseline-on-migrate: true
+        baseline-version: 1.1
+        enabled: true
+        locations: classpath:/db/migration
+        out-of-order: false
+    jpa:
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQLDialect
+    kafka:
+        bootstrap-servers: localhost:29092
+        consumer:
+            auto-offset-reset: earliest
+            enable-auto-commit: false
+        listener:
+            ack-mode: MANUAL_IMMEDIATE
+        producer:
+            properties:
+                acks: all
+    security:
+        oauth2:
+            client:
+                registration:
+                    google:
+                        client-id: 809236032393-ms8jl2qt0v6uu0gakv0339ekoq5iva26.apps.googleusercontent.com
+                        client-secret: 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
+                        scope: openid,profile,email
+            resourceserver:
+                jwt:
+                    issuer-uri: https://accounts.google.com
+                    jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
+    webflux:
+        base-path: /api
+springdoc:
+    api-docs:
+        path: /api-docs
+
+documents:
+    bucket:
+        name: documents
+
+order:
+    item:
+        status:
+            sequence: CREATED,AWAITING_PAYMENT,CONFIRMED,SHIPPED,COMPLETED
+    kafka:
+        topic:
+            name: order
+    status:
+        sequence: CREATED,AWAITING_PAYMENT,CONFIRMED,COMPLETED
+    worker:
+        command:
+            event:
+                kafka:
+                    topic:
+                        name: ordercommand
+        event:
+            failure:
+                kafka:
+                    topic:
+                        name: orderfailure
+            filters:
+                eventname: CreateOrderCommand,ShipmentStatusUpdated
+        kafka:
+            group:
+                id: order
+        shipment:
+            event:
+                kafka:
+                    topic:
+                        name: shipment
