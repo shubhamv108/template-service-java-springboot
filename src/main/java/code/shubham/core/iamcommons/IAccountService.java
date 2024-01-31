@@ -9,4 +9,6 @@ public interface IAccountService {
 
 	GetAccountResponse getById(Long accountId);
 
+	GetAccountResponse fetchByEmail(String email);
+
 }

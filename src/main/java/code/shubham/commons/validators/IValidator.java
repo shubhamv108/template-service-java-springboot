@@ -6,6 +6,8 @@ public interface IValidator<OBJECT> {
 
 	String MUST_NOT_BE_EMPTY = "%s must not be empty.";
 
+	String MUST_BE_VALID_ID = "%s must be valid id.";
+
 	IValidator<OBJECT> validate(OBJECT object);
 
 	IValidator<OBJECT> validateOrThrowException(OBJECT object);

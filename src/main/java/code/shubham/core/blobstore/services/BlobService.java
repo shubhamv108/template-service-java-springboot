@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -24,7 +25,10 @@ public class BlobService {
 	private String defaultRegion;
 
 	public BlobResponse getPreSignedUploadUrl(final String owner, final String bucket, final String key,
-			final Map<String, String> metadata) {
+			Map<String, String> metadata) {
+		if (metadata == null)
+			metadata = new HashMap<>();
+
 		final Blob blob = this.repository.save(Blob.builder()
 			.bucket(bucket)
 			.keyName(key)
@@ -34,27 +38,31 @@ public class BlobService {
 		metadata.remove("checksum");
 		return BlobResponse.builder()
 			.blobId(blob.getId())
-			.uploadUrl(S3Utils.createPresignedUrl(this.defaultRegion, blob.getBucket(), blob.getFullKey(), metadata))
+			.url(S3Utils.createPresignedUrl(this.defaultRegion, blob.getBucket(), blob.getFullKey(), metadata))
 			.build();
 	}
 
 	public Boolean doesBlobExist(final Long id, final String owner) {
-		return this.get(id, owner).map(blob -> true).orElse(false);
+		return this.get(id, owner).isPresent();
+	}
+
+	public BlobResponse getPreSignedDownloadUrl(final Long id, final String owner) {
+		final Blob blob = this.getOrThrowException(id, owner);
+		return BlobResponse.builder()
+			.blobId(blob.getId())
+			.url(S3Utils.createPresignedGetUrl(this.defaultRegion, blob.getBucket(), blob.getFullKey(), 600000))
+			.build();
+	}
+
+	public Blob getOrThrowException(final Long id, final String owner) {
+		return this.get(id, owner)
+			.orElseThrow(() -> new InvalidRequestException("id", "No such blob exists with id: %s", id.toString()));
 	}
 
 	public Optional<Blob> get(final Long id, final String owner) {
 		return this.repository.findByIdAndOwner(id, owner)
 			.filter(blob -> S3Utils.doesObjectExist(this.defaultRegion, blob.getBucket(), blob.getFullKey(),
 					blob.getChecksum()));
-	}
-
-	public BlobResponse getPreSignedDownloadUrl(final Long id, final String owner) {
-		final Blob blob = this.get(id, owner)
-			.orElseThrow(() -> new InvalidRequestException("id", "No such blob exists with id: %s", id.toString()));
-		return BlobResponse.builder()
-			.blobId(blob.getId())
-			.uploadUrl(S3Utils.createPresignedGetUrl(this.defaultRegion, blob.getBucket(), blob.getFullKey()))
-			.build();
 	}
 
 }

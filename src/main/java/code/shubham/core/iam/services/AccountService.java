@@ -54,4 +54,14 @@ public class AccountService implements IAccountService {
 			.orElse(null);
 	}
 
+	@Override
+	public GetAccountResponse fetchByEmail(final String email) {
+		return this.repository.findByEmail(email)
+			.map(account -> GetAccountResponse.builder()
+				.account(new AccountDTO(account.getId(), account.getEmail()))
+				.roles(this.userRoleService.getAllRoles(account.getId()))
+				.build())
+			.orElse(null);
+	}
+
 }

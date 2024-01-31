@@ -3,7 +3,7 @@ package code.shubham.core.blobstore.web.v1.validators;
 import code.shubham.commons.utils.StringUtils;
 import code.shubham.commons.validators.AbstractRequestValidator;
 import code.shubham.commons.validators.IValidator;
-import code.shubham.core.documentstoremodels.SaveDocumentRequest;
+import code.shubham.core.documentmodels.SaveDocumentRequest;
 
 public class SaveDocumentRequestValidator extends AbstractRequestValidator<SaveDocumentRequest> {
 

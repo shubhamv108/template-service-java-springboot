@@ -1,5 +1,6 @@
 package code.shubham.core.iam.web.v1.controllers;
 
+import code.shubham.commons.contexts.AccountIDContextHolder;
 import code.shubham.commons.utils.ResponseUtils;
 import code.shubham.core.iam.services.AccountService;
 import code.shubham.core.iammodels.GetOrCreateAccount;
@@ -22,8 +23,9 @@ public class AccountController {
 	private final AccountService accountService;
 
 	@GetMapping
-	public ResponseEntity<?> getOrCreateUser(@RequestBody GetOrCreateAccount.Request request) {
-		return ResponseUtils.getDataResponseEntity(HttpStatus.OK, this.accountService.getOrCreate(request));
+	public ResponseEntity<?> getByContextId() {
+		return ResponseUtils.getDataResponseEntity(HttpStatus.OK,
+				this.accountService.getById(AccountIDContextHolder.get()));
 	}
 
 	@GetMapping("/{accountId}")

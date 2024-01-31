@@ -1,11 +1,16 @@
 package code.shubham.commons.utils;
 
 import code.shubham.commons.models.ServiceResponse;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class ResponseUtils {
 
@@ -45,25 +50,35 @@ public class ResponseUtils {
 	}
 
 	public static ResponseEntity<?> getResponseEntity(int statusCode, Object data,
-			java.util.Map<String, java.util.List<String>> headers) {
+			Map<String, java.util.List<String>> headers) {
 		return getResponseEntity(statusCode, data, null, headers);
 	}
 
 	public static ResponseEntity<?> getResponseEntity(int statusCode, Object data,
-			java.util.Map<String, java.util.List<String>> headers, String headerKey, String... headerValues) {
-		headers.put(headerKey, java.util.Arrays.asList(headerValues));
+			Map<String, java.util.List<String>> headers, String headerKey, String... headerValues) {
+		headers.put(headerKey, Arrays.asList(headerValues));
 		return getResponseEntity(statusCode, data, null, headers);
 	}
 
-	public static ResponseEntity<?> getResponseEntity(int statusCode, Object data, Object errors,
-			java.util.Map<String, java.util.List<String>> headers) {
-		ServiceResponse response = ServiceResponse.builder().statusCode(statusCode).data(data).error(errors).build();
-		org.springframework.http.HttpHeaders httpHeaders = null;
+	public static ResponseEntity<?> getResponseEntity(final int statusCode, final Object data, final Object errors,
+			final Map<String, java.util.List<String>> headers) {
+		final ServiceResponse response = ServiceResponse.builder()
+			.statusCode(statusCode)
+			.data(data)
+			.error(errors)
+			.build();
+		HttpHeaders httpHeaders = null;
 		if (headers != null) {
-			httpHeaders = new org.springframework.http.HttpHeaders();
+			httpHeaders = new HttpHeaders();
 			headers.forEach(httpHeaders::addAll);
 		}
 		return ResponseEntity.status(statusCode).headers(httpHeaders).body(response);
+	}
+
+	public static ResponseEntity<?> redirect(final String redirectURI) throws URISyntaxException {
+		final HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(new URI(redirectURI));
+		return ResponseEntity.status(HttpStatus.TEMPORARY_REDIRECT).headers(headers).build();
 	}
 
 }

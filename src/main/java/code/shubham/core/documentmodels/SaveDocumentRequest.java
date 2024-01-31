@@ -1,7 +1,6 @@
-package code.shubham.core.documentstoremodels;
+package code.shubham.core.documentmodels;
 
 import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -19,15 +18,9 @@ public class SaveDocumentRequest {
 	private String name;
 
 	@NotNull
-	@NotEmpty
-	@Min(36)
-	@Max(36)
 	private Long blobId;
 
 	@NotNull
-	@NotEmpty
-	@Min(17)
-	@Max(19)
-	private Long userId;
+	private Long accountId;
 
 }

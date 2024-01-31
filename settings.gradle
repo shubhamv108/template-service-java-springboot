@@ -1,5 +1,11 @@
 rootProject.name = 'template-service-java-springboot'
 
+sourceControl {
+    gitRepository ("https://github.com/shubhamv108/crypto-utils.git") {
+        producesModule ("code.shubham:crypto-utils")
+    }
+}
+
 
 //include "shared", "api", "services:webservice"
 //

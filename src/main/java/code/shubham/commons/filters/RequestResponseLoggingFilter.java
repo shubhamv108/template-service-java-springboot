@@ -2,6 +2,7 @@ package code.shubham.commons.filters;
 
 import code.shubham.commons.Constants;
 import code.shubham.commons.utils.MetricsLogger;
+import code.shubham.commons.utils.StringUtils;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -48,7 +49,6 @@ public class RequestResponseLoggingFilter implements Filter {
 		final String responseBody = new String(responseArray, responseCacheWrapperObject.getCharacterEncoding());
 		responseCacheWrapperObject.copyBodyToResponse();
 
-		final Long requestStartTimestamp = (Long) request.getAttribute(Constants.RequestKey.REQUEST_START_TIMESTAMP);
 		log.info("Response:{StatusCode: {}, Headers: {}, Body: {}}", response.getStatus(), responseHeaders,
 				responseBody);
 		this.metricsLogger.log(request);
@@ -64,6 +64,10 @@ public class RequestResponseLoggingFilter implements Filter {
 				headers.put(headerName, headersValue.apply(headerName));
 			}
 		}
+		final String location = (String) headersValue.apply("Location");
+		if (StringUtils.isNotEmpty(location))
+			headers.put("Location", location);
+
 		return headers;
 	}
 

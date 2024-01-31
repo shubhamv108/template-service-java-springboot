@@ -12,6 +12,6 @@ public class BlobResponse {
 	private Long blobId;
 
 	@NotNull
-	private String uploadUrl;
+	private String url;
 
 }

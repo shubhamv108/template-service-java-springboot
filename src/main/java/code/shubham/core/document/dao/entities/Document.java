@@ -1,4 +1,4 @@
-package code.shubham.core.documentstore.dao.entities;
+package code.shubham.core.document.dao.entities;
 
 import code.shubham.commons.dao.base.entities.BaseAbstractAuditableEntity;
 import jakarta.persistence.Column;
@@ -27,7 +27,7 @@ public class Document extends BaseAbstractAuditableEntity {
 	private String name;
 
 	@Column(nullable = false)
-	private Long owner;
+	private String owner;
 
 	@Column(nullable = false)
 	private Long blobId;

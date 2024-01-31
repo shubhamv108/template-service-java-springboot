@@ -88,7 +88,11 @@ dependencies {
 
 		'org.springframework.kafka:spring-kafka',
 
+		'code.shubham:crypto-utils:0.0.1',
+
 		'software.amazon.awssdk:s3:2.22.1',
+		'com.amazonaws:aws-java-sdk-cloudfront:1.12.646',
+		'org.bouncycastle:bcprov-jdk18on:1.77'
 	)
 	runtimeOnly (
 		'com.mysql:mysql-connector-j',

@@ -11,6 +11,7 @@ import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignReques
 import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.model.PresignedPutObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignRequest;
+import software.amazon.awssdk.services.s3.presigner.model.UploadPartPresignRequest;
 
 import java.time.Duration;
 import java.util.Map;
@@ -30,8 +31,7 @@ public class S3Utils {
 				.build();
 
 			final PutObjectPresignRequest presignRequest = PutObjectPresignRequest.builder()
-				.signatureDuration(Duration.ofMinutes(10)) // The URL expires in 10
-															// minutes.
+				.signatureDuration(Duration.ofMinutes(10))
 				.putObjectRequest(objectRequest)
 				.build();
 
@@ -44,15 +44,14 @@ public class S3Utils {
 		}
 	}
 
-	/* Create a pre-signed URL to download an object in a subsequent GET request. */
-	public static String createPresignedGetUrl(final String region, final String bucketName, String keyName) {
+	public static String createPresignedGetUrl(final String region, final String bucketName, final String keyName,
+			long durationInMilliSeconds) {
 		try (final S3Presigner presigner = S3Presigner.builder().region(Region.of(region)).build()) {
 
 			GetObjectRequest objectRequest = GetObjectRequest.builder().bucket(bucketName).key(keyName).build();
 
 			GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
-				.signatureDuration(Duration.ofMinutes(10)) // The URL will expire in 10
-															// minutes.
+				.signatureDuration(Duration.ofMillis(durationInMilliSeconds))
 				.getObjectRequest(objectRequest)
 				.build();
 
@@ -68,9 +67,12 @@ public class S3Utils {
 		try {
 			final S3Client s3 = S3Client.builder().region(Region.of(region)).build();
 
-			final GetObjectAttributesResponse response = s3
-				.getObjectAttributes(GetObjectAttributesRequest.builder().bucket(bucket).key(key).build());
-			return !response.deleteMarker() && Optional.ofNullable(checksum)
+			final GetObjectAttributesResponse response = s3.getObjectAttributes(GetObjectAttributesRequest.builder()
+				.bucket(bucket)
+				.key(key)
+				.objectAttributes(ObjectAttributes.CHECKSUM, ObjectAttributes.OBJECT_SIZE)
+				.build());
+			return Optional.ofNullable(response.deleteMarker()).orElse(true) && Optional.ofNullable(checksum)
 				.map(sum -> sum.equals(response.checksum().checksumCRC32C()))
 				.orElse(true);
 		}
@@ -82,24 +84,6 @@ public class S3Utils {
 			log.error("Exception while invoking S3::getObjectAttributes", exception);
 			throw new InternalServerException("Something went wrong");
 		}
-	}
-
-	public static boolean getMetadata(final String region, final String bucket, final String key) {
-		try {
-			final S3Client s3 = S3Client.builder().region(Region.of(region)).build();
-
-			final GetObjectAttributesResponse response = s3
-				.getObjectAttributes(GetObjectAttributesRequest.builder().bucket(bucket).key(key).build());
-		}
-		catch (NoSuchKeyException exception) {
-			log.error("No such key!!!", exception);
-			return false;
-		}
-		catch (SdkException exception) {
-			log.error("Exception while invoking S3::getObjectAttributes", exception);
-			throw new InternalServerException("Something went wrong");
-		}
-		return true;
 	}
 
 }
