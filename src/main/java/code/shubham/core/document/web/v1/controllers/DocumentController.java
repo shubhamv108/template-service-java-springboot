@@ -55,4 +55,5 @@ public class DocumentController {
 	public ResponseEntity<?> getDownloadURL(@PathVariable("id") final Long id) throws URISyntaxException {
 		return ResponseUtils.redirect(this.service.getDownloadURL(id));
 	}
+
 }

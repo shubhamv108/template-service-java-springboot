@@ -40,3 +40,9 @@ out/
 ## logs
 log/
 logs/
+
+# terraform
+*.tfstate
+**/*.tfstate
+.terraform/
+**/.terraform/
