@@ -1,0 +1,8 @@
+--CREATE PROCEDURE POLL_ANY_AVAILABLE_KEY()
+--BEGIN
+--    SELECT `name` FROM `available_keys` WHERE `is_selected` = 0 LIMIT 1);
+--    UPDATE available_keys SET is_selected = 1 WHERE name = (SELECT @keyName);
+--    INSERT INTO used_keys VALUES ((SELECT @keyName));
+--    DELETE FROM available_keys WHERE name = (SELECT @keyName);
+--    SELECT @keyName as name;
+--END;

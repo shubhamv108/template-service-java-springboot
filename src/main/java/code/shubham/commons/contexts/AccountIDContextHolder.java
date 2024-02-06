@@ -16,4 +16,8 @@ public class AccountIDContextHolder {
 		CONTEXT.remove();
 	}
 
+	public static boolean isSet() {
+		return CONTEXT.get() != null;
+	}
+
 }

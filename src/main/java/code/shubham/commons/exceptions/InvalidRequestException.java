@@ -1,5 +1,6 @@
 package code.shubham.commons.exceptions;
 
+import code.shubham.commons.exceptions.builders.ErrorMessages;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -74,24 +75,7 @@ public class InvalidRequestException extends ClientException {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder("[\n");
-		this.errorMessagesList.stream().map(errorMessagesMap -> {
-			StringBuilder mapBBuilder = new StringBuilder("{\n");
-			errorMessagesMap.forEach((k, v) -> {
-				mapBBuilder.append("\t").append('"').append(k).append('"').append(": ").append("[\n");
-				v.forEach(e -> mapBBuilder.append("\t\t").append('"').append(e).append('"').append(",\n"));
-				mapBBuilder.replace(mapBBuilder.lastIndexOf(","), mapBBuilder.lastIndexOf(",") + 1, "");
-				mapBBuilder.append('\t').append("]\n");
-				if ("]".equals(mapBBuilder.charAt(mapBBuilder.length() - 1))) {
-					mapBBuilder.append(',');
-				}
-				mapBBuilder.append('\n');
-			});
-			mapBBuilder.append("},");
-			return mapBBuilder;
-		}).forEach(builder::append);
-		builder.append("]\n");
-		return builder.toString();
+		return ErrorMessages.formulate(this.errorMessagesList);
 	}
 
 	public void tryThrow() {

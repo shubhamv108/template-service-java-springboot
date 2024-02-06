@@ -3,6 +3,7 @@ package code.shubham.commons.exceptions.handlers;
 import code.shubham.commons.exceptions.BlobStoreException;
 import code.shubham.commons.exceptions.InternalServerException;
 import code.shubham.commons.exceptions.InvalidRequestException;
+import code.shubham.commons.exceptions.NotFoundException;
 import code.shubham.commons.exceptions.ServiceInvocationClientException;
 import code.shubham.commons.exceptions.UnauthorizedException;
 import code.shubham.commons.utils.ResponseUtils;
@@ -40,6 +41,12 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 			final WebRequest request) {
 		log.error(exception.getMessage(), exception);
 		return ResponseUtils.getErrorResponseEntity(HttpStatus.BAD_REQUEST.value(), exception.getOriginalErrors());
+	}
+
+	@ExceptionHandler({ NotFoundException.class })
+	public ResponseEntity<?> handleNotFoundException(final NotFoundException exception, final WebRequest request) {
+		log.debug(exception.getMessage(), exception);
+		return ResponseUtils.getErrorResponseEntity(HttpStatus.NOT_FOUND.value(), exception.getErrorMessages());
 	}
 
 	@ExceptionHandler({ ServiceInvocationClientException.class })

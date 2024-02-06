@@ -2,17 +2,14 @@
 *.iml
 *.iws
 .target/
-target/
 .sonar/
 .sonarlint/
 
 .github/
 .gradle/
-.build/
-build/
 fluentbit/
 grafana/
-infra/
+infra/app/
 k8s/
 log/
 logs/

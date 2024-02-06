@@ -1,6 +1,7 @@
 package code.shubham.commons.utils;
 
 import code.shubham.commons.models.ServiceResponse;
+import lombok.SneakyThrows;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +16,14 @@ import java.util.Map;
 public class ResponseUtils {
 
 	public static ResponseEntity<?> getOK() {
-		return ResponseEntity.status(org.springframework.http.HttpStatus.OK).build();
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
 	public static ResponseEntity<?> getErrorResponseEntity(int statusCode, Object errors) {
 		return getResponseEntity(statusCode, null, errors);
 	}
 
-	public static ResponseEntity<?> getResponseEntity(org.springframework.http.HttpStatus status) {
+	public static ResponseEntity<?> getResponseEntity(HttpStatus status) {
 		return getResponseEntity(status.value(), null, null);
 	}
 
@@ -30,7 +31,7 @@ public class ResponseUtils {
 		return getResponseEntity(statusCode, null, null);
 	}
 
-	public static ResponseEntity<?> getDataResponseEntity(org.springframework.http.HttpStatus status, Object data) {
+	public static ResponseEntity<?> getDataResponseEntity(HttpStatus status, Object data) {
 		return getResponseEntity(status.value(), data, null);
 	}
 
@@ -75,9 +76,14 @@ public class ResponseUtils {
 		return ResponseEntity.status(statusCode).headers(httpHeaders).body(response);
 	}
 
-	public static ResponseEntity<?> redirect(final String redirectURI) throws URISyntaxException {
+	public static ResponseEntity<?> redirect(final String redirectURI) {
 		final HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(new URI(redirectURI));
+		try {
+			headers.setLocation(new URI(redirectURI));
+		}
+		catch (URISyntaxException e) {
+			throw new RuntimeException(e);
+		}
 		return ResponseEntity.status(HttpStatus.TEMPORARY_REDIRECT).headers(headers).build();
 	}
 
