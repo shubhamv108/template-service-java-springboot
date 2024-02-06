@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -30,12 +32,22 @@ public class TinyURLController {
 	private final TinyURLService service;
 
 	@GetMapping
-	public ResponseEntity<?> get(@RequestParam("url") final String url) {
+	public ResponseEntity<?> get(@RequestParam("url") final String url,
+			@RequestParam(value = "alias", required = false) final String alias,
+			@RequestParam(value = "ttlInSeconds", required = false) final Long ttlInSeconds) {
 
 		if (StringUtils.isEmpty(url))
 			throw new InvalidRequestException("url", "url must not be null or empty");
 
-		final ShortURL shortURL = ShortURL.builder().url(url).accountId(AccountIDContextHolder.get()).build();
+		final ShortURL shortURL = ShortURL.builder()
+			.url(url)
+			.accountId(AccountIDContextHolder.get())
+			.keyName(alias)
+			.expiryAt(Optional.ofNullable(ttlInSeconds)
+				.map(ttl -> new Date(System.currentTimeMillis() + (ttl * 1000)))
+				.orElse(null))
+			.build();
+
 		final String tinyURL = this.service.create(shortURL);
 		return ResponseUtils.getDataResponseEntity(HttpStatus.CREATED.value(), new HashMap<>() {
 			{

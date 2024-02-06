@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface ShortUrlRepository extends JpaRepository<ShortURL, Long> {
 
 	@Query(nativeQuery = true,
-			value = "SELECT url FROM short_urls WHERE key_name = ? AND (account_id IS NULL OR account_id = ?)")
+			value = "SELECT url FROM short_urls WHERE key_name = ? AND (account_id IS NULL OR account_id = ?) AND expiry_at > now()")
 	Optional<String> findURL(String shortUrl, Long accountId);
 
 }
