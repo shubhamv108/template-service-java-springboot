@@ -18,3 +18,9 @@ variable "environment" {
 
   default = "test"
 }
+
+variable "s3_bucket_paste" {
+  type        = string
+  description = "Template service in java, spring-boot project."
+  default = "private-pastesss"
+}

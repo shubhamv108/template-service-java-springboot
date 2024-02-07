@@ -18,3 +18,15 @@ variable "environment" {
 
   default = "test"
 }
+
+variable "aws_s3_bucket_id_document" {
+  type        = string
+  description = "AWS region for all resources."
+  default = ""
+}
+
+variable "aws_s3_bucket_id_paste" {
+  type        = string
+  description = "AWS region for all resources."
+  default = ""
+}
