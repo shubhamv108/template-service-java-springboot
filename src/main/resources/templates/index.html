@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Example</title>
+    <!-- Link the JavaScript file -->
+<!--    <script type="text/javascript" th:src="@{/js/main.js}"></script>-->
+    <script>
+
+        function fetchAndDisplay() {
+          fetch("http://localhost:8080/api/v1/cryptocurrency/conversionRates")
+            .then(response => {
+              if (response.ok) {
+                return response.json();
+              } else {
+                throw new Error("NETWORK RESPONSE ERROR");
+              }
+            })
+            .then(data => {
+              displayTable(data.data);
+            })
+            .catch(error => {
+              console.error("FETCH ERROR:", error);
+            });
+        }
+
+        function hideButton() {
+            const btn = document.getElementById('btn');
+            btn.style.display = 'none';
+        }
+
+        function displayTable(data) {
+          hideButton()
+
+          const table = document.getElementById("table");
+          table.innerHTML = "";
+
+          const header = document.createElement("tr");
+
+          for (let key of Object.keys(data[0])) {
+            const th = document.createElement("th");
+            th.textContent = key;
+            header.appendChild(th);
+          }
+
+          table.appendChild(header);
+
+          for (let item of data) {
+            const row = document.createElement("tr");
+
+            for (let value of Object.values(item)) {
+              const td = document.createElement("td");
+              td.textContent = value;
+              row.appendChild(td);
+            }
+            table.appendChild(row);
+          }
+        }
+
+        const btn = document.getElementById('btn');
+
+        btn.addEventListener('click', () => {
+          btn.style.display = 'none';
+          const box = document.getElementById('box');
+          box.style.display = 'block';
+        });
+    </script>
+</head>
+<body>
+<!-- Create a button element with an onclick attribute -->
+<button id="btn" onclick="fetchAndDisplay()">Fetch and Display Data</button>
+<!-- Create a table element with an id attribute -->
+<table id="table"></table>
+</body>
+</html>

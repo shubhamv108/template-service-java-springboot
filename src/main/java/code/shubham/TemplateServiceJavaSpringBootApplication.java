@@ -36,16 +36,16 @@ public class TemplateServiceJavaSpringBootApplication implements CommandLineRunn
 
 	@Override
 	public void run(String... args) throws Exception {
-		// final PrivateKey privateKey = CloudFrontUtils.readPrivateKeyFromFile(args[0]);
+		// final PrivateKey privateKey =
+		// CloudFrontUtils.readPrivateKeyFromFile("../private.pem");
 		// final KeyStore entity =
 		// this.keyRepository.findByPurpose("DOCUMENTS-CDN-CLOUD_FRONT-PRIVATE_KEY");
 		// if (entity == null)
-		// this.keyRepository.save(
-		// KeyStore.builder()
+		// this.keyRepository.save(KeyStore.builder()
 		// .key(privateKey.getEncoded())
 		// .purpose("DOCUMENTS-CDN-CLOUD_FRONT-PRIVATE_KEY")
 		// .build());
-		// System.out.println ("Key algorithm: " + privateKey.getAlgorithm());
+		// System.out.println("Key algorithm: " + privateKey.getAlgorithm());
 	}
 
 }

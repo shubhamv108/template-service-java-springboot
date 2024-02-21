@@ -1,20 +1,23 @@
 package code.shubham.core.tinyurl.services;
 
+import code.shubham.commons.contexts.AccountIDContextHolder;
 import code.shubham.commons.utils.StringUtils;
 import code.shubham.core.tinyurl.dao.entities.ShortURL;
 import code.shubham.core.tinyurl.dao.repositories.ShortUrlRepository;
 import code.shubham.core.keygenerationcommons.strategies.IKeyGenerateStrategy;
+import code.shubham.core.tinyurlcommons.ITinyURLService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Slf4j
 @Component
-public class TinyURLService {
+public class TinyURLService implements ITinyURLService {
 
 	private final ShortUrlRepository repository;
 
@@ -33,7 +36,16 @@ public class TinyURLService {
 		this.randomCharacterKeyGenerateStrategy = randomCharacterKeyGenerateStrategy;
 	}
 
-	public String create(final ShortURL shortURL) {
+	@Override
+	public String create(final String url, final String alias, final Long ttlInSeconds) {
+		final ShortURL shortURL = ShortURL.builder()
+			.url(url)
+			.accountId(AccountIDContextHolder.get())
+			.keyName(alias)
+			.expiryAt(Optional.ofNullable(ttlInSeconds)
+				.map(ttl -> new Date(System.currentTimeMillis() + (ttl * 1000)))
+				.orElse(null))
+			.build();
 		ShortURL generatedShortURL = null;
 		if (StringUtils.isNotEmpty(shortURL.getKeyName()))
 			generatedShortURL = this.repository.save(shortURL);
@@ -61,6 +73,7 @@ public class TinyURLService {
 		return shortURL;
 	}
 
+	@Override
 	public Optional<String> resolve(final String shortUrl, final Long accountId) {
 		return this.repository.findURL(shortUrl, accountId);
 	}

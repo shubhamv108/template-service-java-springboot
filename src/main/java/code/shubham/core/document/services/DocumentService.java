@@ -3,15 +3,17 @@ package code.shubham.core.document.services;
 import code.shubham.commons.contexts.AccountIDContextHolder;
 import code.shubham.commons.enums.DownloadURLSource;
 import code.shubham.commons.exceptions.InvalidRequestException;
+import code.shubham.commons.factories.DownloadURLFactory;
 import code.shubham.core.blobstore.dao.entities.Blob;
 import code.shubham.core.blobstore.services.BlobService;
 import code.shubham.core.blobstoremodels.BlobResponse;
 import code.shubham.core.document.dao.entities.Document;
 import code.shubham.core.document.dao.repositories.DocumentRepository;
-import code.shubham.core.document.services.factories.DocumentDownloadURLFactory;
 import code.shubham.core.documentmodels.DocumentDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +38,9 @@ public class DocumentService {
 
 	private final BlobService blobService;
 
-	private final DocumentDownloadURLFactory downloadURLFactory;
+	@Autowired
+	@Qualifier("DocumentDownloadURLFactory")
+	private DownloadURLFactory downloadURLFactory;
 
 	public BlobResponse getUploadURL(final Map<String, String> metadata) {
 		return this.blobService.getPreSignedUploadUrl(AccountIDContextHolder.get().toString(), this.defaultBucket,

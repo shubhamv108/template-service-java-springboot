@@ -137,3 +137,17 @@ order:
                 kafka:
                     topic:
                         name: shipment
+
+pastebin:
+    bucket:
+        name: private-pastesss
+    download:
+        url:
+            source: CLOUD_FRONT
+            ttl:
+                milliseconds: 600000
+    cdn:
+        domain: dbz3h8mp9u1cr.cloudfront.net
+        key:
+            pair: APKAWIRY6IEW2RCDQJVH
+            type: DOCUMENTS-CDN-CLOUD_FRONT-PRIVATE_KEY

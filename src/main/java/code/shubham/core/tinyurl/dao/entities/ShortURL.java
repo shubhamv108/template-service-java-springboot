@@ -3,6 +3,7 @@ package code.shubham.core.tinyurl.dao.entities;
 import code.shubham.commons.dao.base.entities.BaseAbstractAuditableEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Index;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -23,7 +24,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "short_urls")
+@Table(name = "short_urls", indexes = { @Index(name = "index_account_id", columnList = "accountId") })
 public class ShortURL extends BaseAbstractAuditableEntity {
 
 	@Column(unique = true, length = 8, nullable = false, updatable = false)
@@ -36,9 +37,5 @@ public class ShortURL extends BaseAbstractAuditableEntity {
 	private Date expiryAt;
 
 	private Long accountId;
-
-	public String getShortURL() {
-		return keyName;
-	}
 
 }

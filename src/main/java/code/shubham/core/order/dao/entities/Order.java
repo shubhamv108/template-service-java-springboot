@@ -21,7 +21,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "orders", indexes = { @Index(name = "index_orders_user_id", columnList = "userId") })
+@Table(name = "orders", indexes = { @Index(name = "index_orders_account_id", columnList = "accountId") })
 public class Order extends BaseAbstractAuditableEntity {
 
 	@Column(nullable = false)

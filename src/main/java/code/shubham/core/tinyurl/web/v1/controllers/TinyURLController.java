@@ -7,6 +7,7 @@ import code.shubham.commons.utils.ResponseUtils;
 import code.shubham.commons.utils.StringUtils;
 import code.shubham.core.tinyurl.dao.entities.ShortURL;
 import code.shubham.core.tinyurl.services.TinyURLService;
+import code.shubham.core.tinyurlcommons.ITinyURLService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -35,20 +36,10 @@ public class TinyURLController {
 	public ResponseEntity<?> get(@RequestParam("url") final String url,
 			@RequestParam(value = "alias", required = false) final String alias,
 			@RequestParam(value = "ttlInSeconds", required = false) final Long ttlInSeconds) {
-
 		if (StringUtils.isEmpty(url))
 			throw new InvalidRequestException("url", "url must not be null or empty");
 
-		final ShortURL shortURL = ShortURL.builder()
-			.url(url)
-			.accountId(AccountIDContextHolder.get())
-			.keyName(alias)
-			.expiryAt(Optional.ofNullable(ttlInSeconds)
-				.map(ttl -> new Date(System.currentTimeMillis() + (ttl * 1000)))
-				.orElse(null))
-			.build();
-
-		final String tinyURL = this.service.create(shortURL);
+		final String tinyURL = this.service.create(url, alias, ttlInSeconds);
 		return ResponseUtils.getDataResponseEntity(HttpStatus.CREATED.value(), new HashMap<>() {
 			{
 				put("url", tinyURL);
