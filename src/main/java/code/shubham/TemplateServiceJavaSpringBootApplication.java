@@ -38,18 +38,6 @@ public class TemplateServiceJavaSpringBootApplication implements CommandLineRunn
 	@Autowired
 	private KeyRepository keyRepository;
 
-	@Value("${aws.sqs.queue.name}")
-	private String queueName;
-
-	@Value("${aws.sqs.topic.name}")
-	private String topicName;
-
-	@Autowired
-	private SQSMessageSender sqsMessageSender;
-
-	@Autowired
-	private SNSMessageSender snsMessageSender;
-
 	@Override
 	public void run(String... args) throws Exception {
 		// final PrivateKey privateKey =
@@ -62,9 +50,6 @@ public class TemplateServiceJavaSpringBootApplication implements CommandLineRunn
 		// .purpose("DOCUMENTS-CDN-CLOUD_FRONT-PRIVATE_KEY")
 		// .build());
 		// System.out.println("Key algorithm: " + privateKey.getAlgorithm());
-		this.sqsMessageSender.send(this.queueName, Event.builder().eventName("test").build());
-		this.snsMessageSender.send(this.topicName, Event.builder().eventName("test").build(), "test-subject");
-
 	}
 
 }
