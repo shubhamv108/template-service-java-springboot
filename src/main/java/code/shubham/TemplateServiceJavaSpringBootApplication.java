@@ -2,6 +2,7 @@ package code.shubham;
 
 import code.shubham.commons.annotations.SpringBootApp;
 import code.shubham.commons.aws.CloudFrontUtils;
+import code.shubham.commons.aws.sns.SNSMessageSender;
 import code.shubham.commons.aws.sqs.SQSMessageSender;
 import code.shubham.commons.keystore.dao.entities.KeyStore;
 import code.shubham.commons.keystore.dao.repositories.KeyRepository;
@@ -40,8 +41,14 @@ public class TemplateServiceJavaSpringBootApplication implements CommandLineRunn
 	@Value("${aws.sqs.queue.name}")
 	private String queueName;
 
+	@Value("${aws.sqs.topic.name}")
+	private String topicName;
+
 	@Autowired
 	private SQSMessageSender sqsMessageSender;
+
+	@Autowired
+	private SNSMessageSender snsMessageSender;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -55,7 +62,8 @@ public class TemplateServiceJavaSpringBootApplication implements CommandLineRunn
 		// .purpose("DOCUMENTS-CDN-CLOUD_FRONT-PRIVATE_KEY")
 		// .build());
 		// System.out.println("Key algorithm: " + privateKey.getAlgorithm());
-		this.sqsMessageSender.sendMessage(this.queueName, Event.builder().eventName("test").build());
+		this.sqsMessageSender.send(this.queueName, Event.builder().eventName("test").build());
+		this.snsMessageSender.send(this.topicName, Event.builder().eventName("test").build(), "test-subject");
 
 	}
 

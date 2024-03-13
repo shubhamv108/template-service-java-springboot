@@ -1,6 +1,7 @@
 package code.shubham.commons.aws.sqs;
 
 import code.shubham.commons.models.Event;
+import io.awspring.cloud.messaging.config.annotation.EnableSqs;
 import io.awspring.cloud.messaging.listener.SqsMessageDeletionPolicy;
 import io.awspring.cloud.messaging.listener.annotation.SqsListener;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,12 +14,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
+//@EnableSqs
 @Service
 // @ConditionalOnProperty(prefix = "service", name = "module", havingValue = "worker")
 public class DefaultSQSMessageReceiver {
-
-	@Value("${aws.sqs.queue.name}")
-	private String queueName;
 
 	@MessageMapping
 	@SqsListener(value = "${aws.sqs.queue.name}", deletionPolicy = SqsMessageDeletionPolicy.ON_SUCCESS)

@@ -91,8 +91,9 @@ dependencies {
 		'code.shubham:crypto-utils:0.0.1',
 
 		'software.amazon.awssdk:s3:2.22.1',
-		'io.awspring.cloud:spring-cloud-starter-aws-messaging:2.4.4',
 		'com.amazonaws:aws-java-sdk-cloudfront:1.12.646',
+		'io.awspring.cloud:spring-cloud-starter-aws-messaging:2.4.4',
+		"io.awspring.cloud:spring-cloud-aws-dependencies:2.4.4",
 		'com.amazonaws:aws-java-sdk-sqs:1.12.676',
 		'org.bouncycastle:bcprov-jdk18on:1.77'
 	)
