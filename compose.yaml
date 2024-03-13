@@ -48,6 +48,8 @@ services:
       - service.module=web
       - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+      - AWS_ENDPOINT_URL=http://localhost:4566
+      - AWS_ENDPOINT_URL_SNS=http://localhost:4566
 
   worker:
     container_name: template-service-java-springboot-worker
@@ -88,6 +90,9 @@ services:
       - service.module=web
       - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+      - AWS_ENDPOINT_URL=http://localstack:4566
+      - AWS_ENDPOINT_URL_SQS=http://localhost:4566
+      - AWS_ENDPOINT_URL_SNS=http://localhost:4566
 
   sonar:
     image: sonarqube:7.9.5-community
@@ -354,6 +359,22 @@ services:
       - '8086:8086'
     volumes:
       - influxdb_data:/var/lib/influxdb
+
+  localstack:
+    image: localstack/localstack
+    container_name: localstack
+    ports:
+      - "4566:4566"
+      - "4571:4571"
+      - "8055:8080"
+    environment:
+      - SERVICES=sqs,sns
+      - AWS_DEFAULT_REGION=ap-south-1
+      - DEBUG=1
+    volumes:
+      - "./localstack/data:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - ./localstack/setup.sh:/etc/localstack/init/ready.d/script.sh
 
 volumes:
   grafana_data: { }

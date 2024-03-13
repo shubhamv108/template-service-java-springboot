@@ -2,12 +2,15 @@ package code.shubham;
 
 import code.shubham.commons.annotations.SpringBootApp;
 import code.shubham.commons.aws.CloudFrontUtils;
+import code.shubham.commons.aws.sqs.SQSMessageSender;
 import code.shubham.commons.keystore.dao.entities.KeyStore;
 import code.shubham.commons.keystore.dao.repositories.KeyRepository;
+import code.shubham.commons.models.Event;
 import code.shubham.encryption.keys.asymmetric.RSAUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 
@@ -34,6 +37,12 @@ public class TemplateServiceJavaSpringBootApplication implements CommandLineRunn
 	@Autowired
 	private KeyRepository keyRepository;
 
+	@Value("${aws.sqs.queue.name}")
+	private String queueName;
+
+	@Autowired
+	private SQSMessageSender sqsMessageSender;
+
 	@Override
 	public void run(String... args) throws Exception {
 		// final PrivateKey privateKey =
@@ -46,6 +55,8 @@ public class TemplateServiceJavaSpringBootApplication implements CommandLineRunn
 		// .purpose("DOCUMENTS-CDN-CLOUD_FRONT-PRIVATE_KEY")
 		// .build());
 		// System.out.println("Key algorithm: " + privateKey.getAlgorithm());
+		this.sqsMessageSender.sendMessage(this.queueName, Event.builder().eventName("test").build());
+
 	}
 
 }

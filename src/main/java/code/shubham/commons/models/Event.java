@@ -1,12 +1,16 @@
 package code.shubham.commons.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Builder
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Event {
 
 	private String eventName;

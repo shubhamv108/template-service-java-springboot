@@ -1,6 +1,12 @@
 aws:
     default:
         region: ap-south-1
+    sqs:
+        queue:
+            name: template-service-java-springboot-queue
+AWS_ENDPOINT_URL: http://localhost:4566
+AWS_ENDPOINT_URL_SQS: http://localhost:4566
+AWS_ENDPOINT_URL_SNS: http://localhost:4566
 bucket:
     name: template-service-java-springboot-documents
 kafka:
