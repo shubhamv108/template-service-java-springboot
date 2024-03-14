@@ -48,4 +48,4 @@ logs/
 **/.terraform/
 
 # localstack
-localstack/data
+localstack/data/
