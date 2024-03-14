@@ -46,3 +46,6 @@ logs/
 **/*.tfstate
 .terraform/
 **/.terraform/
+
+# localstack
+localstack/data
