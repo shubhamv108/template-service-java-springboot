@@ -1,9 +1,11 @@
 package code.shubham.commons.aws.sns;
 
+import code.shubham.commons.utils.StringUtils;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.sns.AmazonSNS;
 import com.amazonaws.services.sns.AmazonSNSClientBuilder;
+import com.amazonaws.services.sqs.AmazonSQSAsyncClientBuilder;
 import io.awspring.cloud.messaging.core.NotificationMessagingTemplate;
 import io.awspring.cloud.messaging.endpoint.NotificationStatusHandlerMethodArgumentResolver;
 import io.awspring.cloud.messaging.endpoint.config.NotificationHandlerMethodArgumentResolverFactoryBean;
@@ -24,14 +26,17 @@ public class SNSConfiguration implements WebMvcConfigurer {
 	@Value("${aws.default.region}")
 	private String region;
 
-	@Value("${AWS_ENDPOINT_URL_SNS}")
+	@Value("${AWS_ENDPOINT_URL_SNS:}")
 	private String snsEndpointUrl;
 
 	@Bean
 	public AmazonSNS amazonSNS() {
-		return AmazonSNSClientBuilder.standard()
-			.withEndpointConfiguration(new EndpointConfiguration(this.snsEndpointUrl, this.region))
-			.build();
+		final AmazonSNSClientBuilder builder = AmazonSNSClientBuilder.standard();
+		if (StringUtils.isNotEmpty(this.snsEndpointUrl))
+			builder.withEndpointConfiguration(new EndpointConfiguration(this.snsEndpointUrl, this.region));
+		else
+			builder.withRegion(this.region);
+		return builder.build();
 	}
 
 	@Bean

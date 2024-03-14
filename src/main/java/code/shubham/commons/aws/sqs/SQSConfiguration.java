@@ -1,5 +1,6 @@
 package code.shubham.commons.aws.sqs;
 
+import code.shubham.commons.utils.StringUtils;
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
 import com.amazonaws.services.sqs.AmazonSQSAsync;
 import com.amazonaws.services.sqs.AmazonSQSAsyncClientBuilder;
@@ -30,9 +31,12 @@ public class SQSConfiguration {
 	@Primary
 	@Bean
 	public AmazonSQSAsync amazonSQSAsync() {
-		return AmazonSQSAsyncClientBuilder.standard()
-			.withEndpointConfiguration(new EndpointConfiguration(this.sqsEndpointUrl, this.region))
-			.build();
+		final AmazonSQSAsyncClientBuilder builder = AmazonSQSAsyncClientBuilder.standard();
+		if (StringUtils.isNotEmpty(this.sqsEndpointUrl))
+			builder.withEndpointConfiguration(new EndpointConfiguration(this.sqsEndpointUrl, this.region));
+		else
+			builder.withRegion(this.region);
+		return builder.build();
 	}
 
 	@Bean
