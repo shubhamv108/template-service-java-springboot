@@ -7,7 +7,7 @@ aws:
         topic:
             name: template-service-java-springboot-topic
 AWS_REGION: ap-south-1
-AWS_ENDPOINT_URL_SQS: https://sqs.ap-south-1.amazonaws.com/430689894701
+AWS_ENDPOINT_URL_SQS: http://localhost:4566
 AWS_ENDPOINT_URL_SNS: http://localhost:4566
 
 bucket:
