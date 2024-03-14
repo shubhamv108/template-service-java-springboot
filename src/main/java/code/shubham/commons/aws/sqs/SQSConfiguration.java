@@ -25,7 +25,7 @@ public class SQSConfiguration {
 	@Value("${aws.default.region}")
 	private String region;
 
-	@Value("${AWS_ENDPOINT_URL_SQS}")
+	@Value("${AWS_ENDPOINT_URL_SQS:}")
 	private String sqsEndpointUrl;
 
 	@Primary
