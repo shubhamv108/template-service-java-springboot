@@ -6,6 +6,7 @@ import code.shubham.core.lock.dao.repositories.LockRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,6 +18,7 @@ public class LockService {
 
 	private final LockRepository repository;
 
+	@Async
 	public boolean lock(final String name, final int previousVersion, final String owner,
 			final long timeToLiveInSeconds) {
 		if (previousVersion == 0)
