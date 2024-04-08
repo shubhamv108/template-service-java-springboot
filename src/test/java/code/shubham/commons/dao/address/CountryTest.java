@@ -5,9 +5,11 @@ import code.shubham.commons.dao.address.repositories.CountryRepository;
 import code.shubham.test.AbstractSpringBootTest;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.TestPropertySource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestPropertySource(properties = "newrelic.config.agent_enabled=false")
 class CountryTest extends AbstractSpringBootTest {
 
 	@Autowired

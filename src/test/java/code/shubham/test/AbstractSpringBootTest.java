@@ -6,11 +6,13 @@ import code.shubham.commons.contexts.AccountIDContextHolder;
 import code.shubham.commons.kafka.KafkaPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.Arrays;
 import java.util.Set;
 
-@SpringBootTest(classes = TemplateServiceJavaSpringBootApplication.class)
+@SpringBootTest(classes = TemplateServiceJavaSpringBootApplication.class,
+		properties = { "newrelic.config.agent_enabled", "false", "NEWRELIC_API_KEY", "TEST_KEY" })
 public abstract class AbstractSpringBootTest extends AbstractTest {
 
 	protected TestKafkaConsumer kafkaConsumer;

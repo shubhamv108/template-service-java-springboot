@@ -44,9 +44,7 @@ public class MicrometerConfiguration {
 
 			@Override
 			public String apiKey() {
-				return MicrometerConfiguration.this.newRelicApiKey; // for production
-																	// purposes take it
-																	// from config file
+				return MicrometerConfiguration.this.newRelicApiKey;
 			}
 
 			@Override
@@ -56,14 +54,7 @@ public class MicrometerConfiguration {
 
 			@Override
 			public String serviceName() {
-				return MicrometerConfiguration.this.serviceName + "." + MicrometerConfiguration.this.serviceModule; // for
-																													// production
-																													// purposes
-																													// take
-																													// it
-																													// from
-																													// config
-																													// file
+				return MicrometerConfiguration.this.serviceName + "." + MicrometerConfiguration.this.serviceModule;
 			}
 
 		};
