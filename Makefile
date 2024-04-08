@@ -79,7 +79,7 @@ help:
 	@echo "help: Display the help menu"
 	@echo "install: Display the help menu"
 	@echo "local-setup: Setup test resources locally"
-	@echo "local-app: Setup test resources locally"
+	@echo "local-app: Setup application locally"
 	@echo "format: Formats the java codebase"
 	@echo "setup: Setup test resources"
 	@echo "teardown: Destroy test resources"
