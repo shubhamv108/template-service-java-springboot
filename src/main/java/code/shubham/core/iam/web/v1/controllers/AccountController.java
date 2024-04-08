@@ -4,6 +4,7 @@ import code.shubham.commons.contexts.AccountIDContextHolder;
 import code.shubham.commons.utils.ResponseUtils;
 import code.shubham.core.iam.services.AccountService;
 import code.shubham.core.iammodels.GetOrCreateAccount;
+import io.micrometer.core.annotation.Timed;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -22,12 +23,16 @@ public class AccountController {
 
 	private final AccountService accountService;
 
+	@Timed(value = "accountcontroller.getByContextId", histogram = true, percentiles = { 0.95, 0.99 },
+			extraTags = { "version", "1.0" })
 	@GetMapping
 	public ResponseEntity<?> getByContextId() {
 		return ResponseUtils.getDataResponseEntity(HttpStatus.OK,
 				this.accountService.getById(AccountIDContextHolder.get()));
 	}
 
+	@Timed(value = "accountController.getById", histogram = true, percentiles = { 0.95, 0.99 },
+			extraTags = { "version", "1.0" })
 	@GetMapping("/{accountId}")
 	public ResponseEntity<?> getById(@PathVariable("accountId") final Long accountId) {
 		return ResponseUtils.getDataResponseEntity(HttpStatus.OK, this.accountService.getById(accountId));

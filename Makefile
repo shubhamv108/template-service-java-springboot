@@ -2,7 +2,7 @@ SHELL := /bin/bash
 OS := $(shell uname)
 
 define start-services
-	@docker compose -f compose.yaml up --force-recreate -d --remove-orphans sonar fluentbit db kafka kafdrop elasticsearch prometheus grafana telegraf influxdb keycloak localstack
+	@docker compose -f compose.yaml up --force-recreate -d --remove-orphans sonar fluentbit newrelic db kafka kafdrop elasticsearch prometheus grafana telegraf influxdb keycloak localstack
 endef
 
 define start-check

@@ -51,6 +51,8 @@ services:
       - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
       - AWS_ENDPOINT_URL=http://localhost:4566
       - AWS_ENDPOINT_URL_SNS=http://localhost:4566
+      - OPENAI_API_KEY=$OPENAI_API_KEY
+      - NEWRELIC_API_KEY=$NEWRELIC_API_KEY
 
   worker:
     container_name: template-service-java-springboot-worker
@@ -95,6 +97,8 @@ services:
       - AWS_ENDPOINT_URL=http://localstack:4566
       - AWS_ENDPOINT_URL_SQS=http://localhost:4566
       - AWS_ENDPOINT_URL_SNS=http://localhost:4566
+      - OPENAI_API_KEY=$OPENAI_API_KEY
+      - NEWRELIC_API_KEY=$NEWRELIC_API_KEY
 
   sonar:
     image: sonarqube:7.9.5-community
@@ -163,6 +167,22 @@ services:
       - ./fluentbit/fluent-bit.conf.temp:/fluent-bit/etc/fluent-bit.conf.temp
       - ./fluentbit/parsers.conf:/fluent-bit/etc/parsers.conf
       - ./log/:/etc/data
+
+  newrelic:
+    image: 'newrelic'
+    container_name: newrelic
+    build:
+      context: .
+      dockerfile: ./newrelic-infra/newrelic-infra.dockerfile
+    cap_add:
+      - SYS_PTRACE
+    network_mode: host
+    pid: host
+    privileged: true
+    volumes:
+      - "/:/host:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    restart: unless-stopped
 
   keycloak:
     image: 'keycloak/keycloak:22.0'

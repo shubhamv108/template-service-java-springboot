@@ -6,6 +6,7 @@ import code.shubham.core.iamcommons.IAccountService;
 import code.shubham.core.iammodels.GetOrCreateAccount;
 import code.shubham.core.iammodels.GetAccountResponse;
 import code.shubham.core.iammodels.AccountDTO;
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,8 @@ public class AccountService implements IAccountService {
 
 	private final AccountRoleService userRoleService;
 
+	@Timed(value = "accountservice.getOrCreate", histogram = true, percentiles = { 0.95, 0.99 },
+			extraTags = { "version", "1.0" })
 	@Override
 	public GetAccountResponse getOrCreate(final GetOrCreateAccount.Request request) {
 		final Optional<Account> existing = this.repository.findByEmail(request.getEmail());
@@ -40,10 +43,12 @@ public class AccountService implements IAccountService {
 
 	public Account create(final Account account) {
 		final Account persisted = this.repository.save(account);
-		this.userRoleService.setRoleToAccount("USER", account.getId());
+		this.userRoleService.setRoleToAccount("USER", persisted.getId());
 		return persisted;
 	}
 
+	@Timed(value = "accountservice.getById", histogram = true, percentiles = { 0.95, 0.99 },
+			extraTags = { "version", "1.0" })
 	@Override
 	public GetAccountResponse getById(final Long accountId) {
 		return this.repository.findById(accountId)
@@ -54,6 +59,8 @@ public class AccountService implements IAccountService {
 			.orElse(null);
 	}
 
+	@Timed(value = "accountservice.fetchByEmail", histogram = true, percentiles = { 0.95, 0.99 },
+			extraTags = { "version", "1.0" })
 	@Override
 	public GetAccountResponse fetchByEmail(final String email) {
 		return this.repository.findByEmail(email)
