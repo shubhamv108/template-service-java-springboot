@@ -1,1 +1,1 @@
- license_key: 9815e0163fd3e754c542094658a7fa0fFFFFNRAL
+ license_key: ${NEWRELIC_API_KEY}

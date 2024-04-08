@@ -183,6 +183,8 @@ services:
       - "/:/host:ro"
       - "/var/run/docker.sock:/var/run/docker.sock"
     restart: unless-stopped
+    environment:
+      - NEWRELIC_API_KEY=$NEWRELIC_API_KEY
 
   keycloak:
     image: 'keycloak/keycloak:22.0'
