@@ -1,0 +1,1 @@
+echo $NEWRELIC_API_KEY | sed -i 's/$NEWRELIC_API_KEY/$1/g' /etc/newrelic-infra.yml

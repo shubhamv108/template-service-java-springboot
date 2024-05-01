@@ -19,6 +19,9 @@ kafka:
         name: template-service-java-springboot
 logging:
     level:
+        io:
+            micrometer:
+                newrelic: TRACE
         org:
             hibernate: ERROR
             springframework:
@@ -35,6 +38,10 @@ management:
         probes:
             enabled: true
     metrics:
+        export:
+            newrelic:
+                api-key: 9815e0163fd3e754c542094658a7fa0fFFFFNRAL
+                account-id: 4413760
         tags:
             application: ${spring.application.name}
     security:
@@ -73,6 +80,8 @@ spring:
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.MySQLDialect
+                connection:
+                    handling_mode: DELAYED_ACQUISITION_AND_RELEASE_AFTER_TRANSACTION
     kafka:
         bootstrap-servers: localhost:29092
         consumer:
